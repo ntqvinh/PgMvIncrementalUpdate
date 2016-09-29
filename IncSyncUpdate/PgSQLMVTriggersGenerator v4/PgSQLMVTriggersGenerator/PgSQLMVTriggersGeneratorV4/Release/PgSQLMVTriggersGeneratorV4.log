@@ -1,0 +1,63 @@
+﻿Build started 04/06/2015 10:52:25 SA.
+     1>Project "D:\myworks\works\C#\pgtriggerGen-C\PgSQLMVTriggersGenerator v4\PgSQLMVTriggersGenerator\PgSQLMVTriggersGeneratorV4\PgSQLMVTriggersGeneratorV4.vcxproj" on node 2 (Rebuild target(s)).
+     1>ClCompile:
+         D:\soft\VisualStd\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Visual Leak Detector" /I"C:\Program Files (x86)\PostgreSQL\9.3\include\server\port\win32_msvc" /I"C:\Program Files (x86)\PostgreSQL\9.3\include\server\port\win32" /I"C:\Program Files (x86)\PostgreSQL\9.3\include\server" /I"C:\Program Files (x86)\PostgreSQL\9.3\include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt ..\Main.c ..\PMVTG.c ..\PMVTG_Column.c ..\PMVTG_CString.c ..\PMVTG_Query.c ..\PMVTG_Table.c
+         Main.c
+     1>..\Main.c(36): warning C4244: 'function' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>..\Main.c(131): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(221): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(336): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(356): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(360): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(424): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(556): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(574): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(609): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(776): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(801): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(831): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(858): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(1079): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(1107): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(1132): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(1508): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(1537): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(1562): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(1653): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(1676): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(1712): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(1835): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(1932): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Main.c(1968): warning C4018: '<' : signed/unsigned mismatch
+         PMVTG.c
+     1>..\PMVTG.c(71): warning C4028: formal parameter 1 different from declaration
+     1>..\PMVTG.c(170): warning C4018: '<' : signed/unsigned mismatch
+     1>..\PMVTG.c(343): warning C4101: 'tmp2' : unreferenced local variable
+     1>..\PMVTG.c(343): warning C4101: 'tmp1' : unreferenced local variable
+     1>..\PMVTG.c(333): warning C4101: 'j' : unreferenced local variable
+     1>..\PMVTG.c(397): warning C4018: '<' : signed/unsigned mismatch
+     1>..\PMVTG.c(441): warning C4018: '<' : signed/unsigned mismatch
+     1>..\PMVTG.c(515): warning C4018: '<' : signed/unsigned mismatch
+         PMVTG_Column.c
+         PMVTG_CString.c
+     1>..\PMVTG_CString.c(124): warning C4018: '<' : signed/unsigned mismatch
+     1>..\PMVTG_CString.c(270): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+         PMVTG_Query.c
+     1>..\PMVTG_Query.c(343): warning C4018: '<' : signed/unsigned mismatch
+         PMVTG_Table.c
+       Link:
+         D:\soft\VisualStd\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\myworks\works\C#\pgtriggerGen-C\Release\PgSQLMVTriggersGeneratorV4.exe" /NOLOGO /LIBPATH:"C:\Program Files (x86)\PostgreSQL\9.3\lib" libpq.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\myworks\works\C#\pgtriggerGen-C\Release\PgSQLMVTriggersGeneratorV4.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\myworks\works\C#\pgtriggerGen-C\Release\PgSQLMVTriggersGeneratorV4.lib" /MACHINE:X86 /SAFESEH Release\Main.obj
+         Release\PMVTG.obj
+         Release\PMVTG_Column.obj
+         Release\PMVTG_CString.obj
+         Release\PMVTG_Query.obj
+         Release\PMVTG_Table.obj
+         Generating code
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\pmvtg_cstring.c(333): warning C4716: 'dammf_split' : must return a value
+         Finished generating code
+         PgSQLMVTriggersGeneratorV4.vcxproj -> D:\myworks\works\C#\pgtriggerGen-C\Release\PgSQLMVTriggersGeneratorV4.exe
+     1>Done Building Project "D:\myworks\works\C#\pgtriggerGen-C\PgSQLMVTriggersGenerator v4\PgSQLMVTriggersGenerator\PgSQLMVTriggersGeneratorV4\PgSQLMVTriggersGeneratorV4.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:15.36

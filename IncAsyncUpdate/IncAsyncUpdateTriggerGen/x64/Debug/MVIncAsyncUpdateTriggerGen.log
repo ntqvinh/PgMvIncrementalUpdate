@@ -1,0 +1,102 @@
+﻿Build started 28/09/2016 7:19:51 CH.
+     1>Project "D:\postgresql\pgtriggerGen-C\published\github-pgtriggerGen-C\IncAsyncUpdate\IncAsyncUpdateTriggerGen\MVIncAsyncUpdateTriggerGen.vcxproj" on node 2 (Rebuild target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /I"d:\postgresql\postgresql-9.5.4-2-windows-x64-binaries\include\\" /ZI /nologo /W3 /WX- /sdl /Od /D _MBCS /Gm /EHsc /RTC1 /MDd /GS- /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TC /errorReport:prompt ..\MVIncAsyncUpdate\MVIncAsyncUpdateTriggerGen\Main.c ..\MVIncAsyncUpdate\MVIncAsyncUpdateTriggerGen\MVIAUTG.c ..\MVIncAsyncUpdate\MVIncAsyncUpdateTriggerGen\MVIAUTG_Column.c ..\MVIncAsyncUpdate\MVIncAsyncUpdateTriggerGen\MVIAUTG_CString.c ..\MVIncAsyncUpdate\MVIncAsyncUpdateTriggerGen\MVIAUTG_Query.c ..\MVIncAsyncUpdate\MVIncAsyncUpdateTriggerGen\MVIAUTG_Table.c
+     1>cl : Command line warning D9025: overriding '/sdl' with '/GS-'
+         MVIAUTG_Table.c
+         MVIAUTG_Query.c
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg_query.c(82): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg_query.c(242): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg_query.c(265): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+         MVIAUTG_CString.c
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg_cstring.c(108): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg_cstring.c(131): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg_cstring.c(147): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(119): note: see declaration of 'strcpy'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg_cstring.c(148): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(90): note: see declaration of 'strcat'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg_cstring.c(164): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(119): note: see declaration of 'strcpy'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg_cstring.c(165): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(90): note: see declaration of 'strcat'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg_cstring.c(166): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(90): note: see declaration of 'strcat'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg_cstring.c(185): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(119): note: see declaration of 'strcpy'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg_cstring.c(186): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(90): note: see declaration of 'strcat'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg_cstring.c(187): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(90): note: see declaration of 'strcat'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg_cstring.c(200): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(119): note: see declaration of 'strcpy'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg_cstring.c(201): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(90): note: see declaration of 'strcat'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg_cstring.c(264): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg_cstring.c(273): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg_cstring.c(274): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+         MVIAUTG_Column.c
+         MVIAUTG.c
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg.c(20): warning C4028: formal parameter 1 different from declaration
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg.c(159): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg.c(321): warning C4101: 'j': unreferenced local variable
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg.c(331): warning C4101: 'tmp2': unreferenced local variable
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg.c(331): warning C4101: 'tmp1': unreferenced local variable
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg.c(383): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg.c(428): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg.c(502): warning C4018: '<': signed/unsigned mismatch
+         Main.c
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(23): warning C4013: 'gets' undefined; assuming extern returning int
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(60): warning C4244: 'function': conversion from '__int64' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(61): warning C4244: 'function': conversion from '__int64' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(62): warning C4244: 'function': conversion from '__int64' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(63): warning C4244: 'function': conversion from '__int64' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(64): warning C4244: 'function': conversion from '__int64' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(81): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(82): warning C4244: 'function': conversion from '__int64' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(172): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(293): warning C4244: 'function': conversion from '__int64' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(316): warning C4244: 'function': conversion from '__int64' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(411): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(423): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(504): warning C4244: 'function': conversion from '__int64' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(518): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(545): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(573): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(579): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(599): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(624): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(651): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(656): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(660): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(673): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(691): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(717): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(721): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(23): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1270): note: see declaration of 'scanf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(23): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(377): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(380): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(383): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(90): note: see declaration of 'strcat'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(462): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\main.c(493): warning C4101: 'check': unreferenced local variable
+         Generating Code...
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdatetriggergen\mviautg_cstring.c(327): warning C4716: 'dammf_split': must return a value
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\postgresql\pgtriggerGen-C\published\github-pgtriggerGen-C\x64\Debug\IncAsyncUpdateTriggerGen.exe" /INCREMENTAL /NOLOGO /LIBPATH:"d:\postgresql\postgresql-9.5.4-2-windows-x64-binaries\lib\\" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib libpq.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"D:\postgresql\pgtriggerGen-C\published\github-pgtriggerGen-C\x64\Debug\IncAsyncUpdateTriggerGen.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\postgresql\pgtriggerGen-C\published\github-pgtriggerGen-C\x64\Debug\IncAsyncUpdateTriggerGen.lib" /MACHINE:X64 x64\Debug\Main.obj
+         x64\Debug\MVIAUTG.obj
+         x64\Debug\MVIAUTG_Column.obj
+         x64\Debug\MVIAUTG_CString.obj
+         x64\Debug\MVIAUTG_Query.obj
+         x64\Debug\MVIAUTG_Table.obj
+         MVIncAsyncUpdateTriggerGen.vcxproj -> D:\postgresql\pgtriggerGen-C\published\github-pgtriggerGen-C\x64\Debug\IncAsyncUpdateTriggerGen.exe
+     1>Done Building Project "D:\postgresql\pgtriggerGen-C\published\github-pgtriggerGen-C\IncAsyncUpdate\IncAsyncUpdateTriggerGen\MVIncAsyncUpdateTriggerGen.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.03

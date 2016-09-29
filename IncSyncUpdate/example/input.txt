@@ -1,0 +1,8 @@
+SELECT countries.country_id, countries.country_name, countries.country_region_id, countries.country_region, customers.cust_id, customers.cust_first_name, customers.cust_last_name, SUM(sales.quantity_sold * costs.unit_price), COUNT(*) FROM countries, customers, sales, costs WHERE countries.country_id = customers.country_id AND customers.cust_id = sales.cust_id AND sales.time_id = costs.time_id AND sales.promo_id = costs.promo_id AND sales.channel_id = costs.channel_id AND sales.prod_id = costs.prod_id GROUP BY countries.country_id, countries.country_name, countries.country_region_id, countries.country_region, customers.cust_id, customers.cust_first_name, customers.cust_last_name
+D:\testmvgen
+mv6
+mv6
+o11dw
+postgres
+password
+5433

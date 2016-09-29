@@ -1,0 +1,153 @@
+﻿Build started 28/09/2016 7:23:29 CH.
+     1>Project "d:\postgresql\pgtriggerGen-C\published\github-pgtriggerGen-C\IncAsyncUpdate\IncAsyncUpdate\IncAsyncUpdate.vcxproj" on node 2 (Rebuild target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /I"d:\postgresql\postgresql-9.5.4-2-windows-x64-binaries\include\\" /ZI /nologo /W3 /WX- /sdl /Od /D _MBCS /Gm /EHsc /RTC1 /MDd /GS- /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TC /errorReport:prompt ..\MVIncAsyncUpdate\MVIncAsyncUpdate\Log.c ..\MVIncAsyncUpdate\MVIncAsyncUpdate\Main.c ..\MVIncAsyncUpdate\MVIncAsyncUpdate\MVIAUTG.c ..\MVIncAsyncUpdate\MVIncAsyncUpdate\MVIAUTG_Column.c ..\MVIncAsyncUpdate\MVIncAsyncUpdate\MVIAUTG_CString.c ..\MVIncAsyncUpdate\MVIncAsyncUpdate\MVIAUTG_Query.c ..\MVIncAsyncUpdate\MVIncAsyncUpdate\MVIAUTG_Table.c
+     1>cl : Command line warning D9025: overriding '/sdl' with '/GS-'
+         MVIAUTG_Table.c
+         MVIAUTG_Query.c
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg_query.c(82): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg_query.c(242): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg_query.c(265): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+         MVIAUTG_CString.c
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg_cstring.c(108): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg_cstring.c(131): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg_cstring.c(147): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(119): note: see declaration of 'strcpy'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg_cstring.c(148): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(90): note: see declaration of 'strcat'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg_cstring.c(164): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(119): note: see declaration of 'strcpy'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg_cstring.c(165): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(90): note: see declaration of 'strcat'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg_cstring.c(166): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(90): note: see declaration of 'strcat'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg_cstring.c(185): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(119): note: see declaration of 'strcpy'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg_cstring.c(186): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(90): note: see declaration of 'strcat'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg_cstring.c(187): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(90): note: see declaration of 'strcat'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg_cstring.c(200): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(119): note: see declaration of 'strcpy'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg_cstring.c(201): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(90): note: see declaration of 'strcat'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg_cstring.c(264): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg_cstring.c(273): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg_cstring.c(274): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+         MVIAUTG_Column.c
+         MVIAUTG.c
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg.c(20): warning C4028: formal parameter 1 different from declaration
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg.c(159): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg.c(323): warning C4101: 'j': unreferenced local variable
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg.c(333): warning C4101: 'tmp2': unreferenced local variable
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg.c(333): warning C4101: 'tmp1': unreferenced local variable
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg.c(385): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg.c(430): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg.c(504): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg.c(507): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+         Main.c
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(27): warning C4013: 'gets' undefined; assuming extern returning int
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(79): warning C4244: 'function': conversion from '__int64' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(80): warning C4244: 'function': conversion from '__int64' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(81): warning C4244: 'function': conversion from '__int64' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(82): warning C4244: 'function': conversion from '__int64' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(83): warning C4244: 'function': conversion from '__int64' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(100): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(101): warning C4244: 'function': conversion from '__int64' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(191): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(290): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(310): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(314): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(378): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(408): warning C4244: 'function': conversion from '__int64' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(432): warning C4244: 'function': conversion from '__int64' to 'int', possible loss of data
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(446): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(463): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(477): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(730): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(1039): warning C4018: '<': signed/unsigned mismatch
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(27): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1270): note: see declaration of 'scanf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(485): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(513): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(538): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(564): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(567): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(571): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(587): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(654): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(715): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(739): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(742): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(746): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(772): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(805): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(825): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(843): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(857): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(885): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(911): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(914): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(919): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(935): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(963): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(1024): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(1048): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(1051): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(1055): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(1091): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(1117): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(1137): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(1152): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(1179): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\main.c(430): warning C4101: 'i': unreferenced local variable
+         Log.c
+         Generating Code...
+     1>d:\postgresql\pgtriggergen-c\published\github-pgtriggergen-c\incasyncupdate\mvincasyncupdate\mvincasyncupdate\mviautg_cstring.c(327): warning C4716: 'dammf_split': must return a value
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\postgresql\pgtriggerGen-C\published\github-pgtriggerGen-C\x64\Debug\IncAsyncUpdate.exe" /INCREMENTAL /NOLOGO /LIBPATH:"d:\postgresql\postgresql-9.5.4-2-windows-x64-binaries\lib\\" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib libpq.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"D:\postgresql\pgtriggerGen-C\published\github-pgtriggerGen-C\x64\Debug\IncAsyncUpdate.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\postgresql\pgtriggerGen-C\published\github-pgtriggerGen-C\x64\Debug\IncAsyncUpdate.lib" /MACHINE:X64 x64\Debug\Log.obj
+         x64\Debug\Main.obj
+         x64\Debug\MVIAUTG.obj
+         x64\Debug\MVIAUTG_Column.obj
+         x64\Debug\MVIAUTG_CString.obj
+         x64\Debug\MVIAUTG_Query.obj
+         x64\Debug\MVIAUTG_Table.obj
+         IncAsyncUpdate.vcxproj -> D:\postgresql\pgtriggerGen-C\published\github-pgtriggerGen-C\x64\Debug\IncAsyncUpdate.exe
+     1>Done Building Project "d:\postgresql\pgtriggerGen-C\published\github-pgtriggerGen-C\IncAsyncUpdate\IncAsyncUpdate\IncAsyncUpdate.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.16

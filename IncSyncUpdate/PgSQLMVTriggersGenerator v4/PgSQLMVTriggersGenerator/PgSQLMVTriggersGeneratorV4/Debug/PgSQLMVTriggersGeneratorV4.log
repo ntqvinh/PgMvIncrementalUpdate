@@ -1,0 +1,62 @@
+﻿Build started 04/06/2015 10:51:59 SA.
+     1>Project "D:\myworks\works\C#\pgtriggerGen-C\PgSQLMVTriggersGenerator v4\PgSQLMVTriggersGenerator\PgSQLMVTriggersGeneratorV4\PgSQLMVTriggersGeneratorV4.vcxproj" on node 2 (Rebuild target(s)).
+     1>ClCompile:
+         D:\soft\VisualStd\VC\bin\CL.exe /c /I"C:\Program Files (x86)\PostgreSQL\9.3\include\server\port\win32_msvc" /I"C:\Program Files (x86)\PostgreSQL\9.3\include\server\port\win32" /I"C:\Program Files (x86)\PostgreSQL\9.3\include\server" /I"C:\Program Files (x86)\PostgreSQL\9.3\include" /I"c:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt ..\Main.c ..\PMVTG.c ..\PMVTG_Column.c ..\PMVTG_CString.c ..\PMVTG_Query.c ..\PMVTG_Table.c
+         PMVTG_Table.c
+         PMVTG_Query.c
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\pmvtg_query.c(343): warning C4018: '<' : signed/unsigned mismatch
+         PMVTG_CString.c
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\pmvtg_cstring.c(124): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\pmvtg_cstring.c(270): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+         PMVTG_Column.c
+         PMVTG.c
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\pmvtg.c(71): warning C4028: formal parameter 1 different from declaration
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\pmvtg.c(170): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\pmvtg.c(343): warning C4101: 'tmp2' : unreferenced local variable
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\pmvtg.c(343): warning C4101: 'tmp1' : unreferenced local variable
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\pmvtg.c(333): warning C4101: 'j' : unreferenced local variable
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\pmvtg.c(397): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\pmvtg.c(441): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\pmvtg.c(515): warning C4018: '<' : signed/unsigned mismatch
+         Main.c
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(36): warning C4244: 'function' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(131): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(221): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(336): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(356): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(360): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(424): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(556): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(574): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(609): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(776): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(801): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(831): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(858): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(1079): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(1107): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(1132): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(1508): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(1537): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(1562): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(1653): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(1676): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(1712): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(1835): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(1932): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\main.c(1968): warning C4018: '<' : signed/unsigned mismatch
+         Generating Code...
+     1>d:\myworks\works\c#\pgtriggergen-c\pgsqlmvtriggersgenerator v4\pgsqlmvtriggersgenerator\pmvtg_cstring.c(333): warning C4716: 'dammf_split' : must return a value
+       Link:
+         D:\soft\VisualStd\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\myworks\works\C#\pgtriggerGen-C\Debug\PgSQLMVTriggersGeneratorV4.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\PostgreSQL\9.3\lib" /LIBPATH:"c:\Program Files (x86)\Visual Leak Detector\lib\Win32" libpq.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST:NO /DEBUG /PDB:"D:\myworks\works\C#\pgtriggerGen-C\Debug\PgSQLMVTriggersGeneratorV4.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\myworks\works\C#\pgtriggerGen-C\Debug\PgSQLMVTriggersGeneratorV4.lib" /MACHINE:X86 Debug\Main.obj
+         Debug\PMVTG.obj
+         Debug\PMVTG_Column.obj
+         Debug\PMVTG_CString.obj
+         Debug\PMVTG_Query.obj
+         Debug\PMVTG_Table.obj
+         PgSQLMVTriggersGeneratorV4.vcxproj -> D:\myworks\works\C#\pgtriggerGen-C\Debug\PgSQLMVTriggersGeneratorV4.exe
+     1>Done Building Project "D:\myworks\works\C#\pgtriggerGen-C\PgSQLMVTriggersGenerator v4\PgSQLMVTriggersGenerator\PgSQLMVTriggersGeneratorV4\PgSQLMVTriggersGeneratorV4.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.55
