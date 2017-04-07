@@ -1,17 +1,21 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <stdlib.h>
 #include "PMVTG_CString.h"
 #include "PMVTG_Query.h"
 
 // ANALYZE SELECTING QUERY
+/*
+*/
 SelectingQuery analyzeSelectingQuery(char *selectingQuery) {
 	int i;
+	//puts("analyzing query...");
+	//puts(selectingQuery);
 	char *rightLim, *tmp;
 	SelectingQuery sq;
 
 	if (!standardizeSelectingQuery(selectingQuery)) return NULL;
 
-	sq = (SelectingQuery) malloc (sizeof(struct s_SelectingQuery));
+	sq = (SelectingQuery)malloc(sizeof(struct s_SelectingQuery));
 
 	// Get clauses' position
 	sq->selectPos = findSubString(selectingQuery, KW_SELECT);
@@ -19,18 +23,25 @@ SelectingQuery analyzeSelectingQuery(char *selectingQuery) {
 	sq->wherePos = findSubString(selectingQuery, KW_WHERE);
 	sq->groupbyPos = findSubString(selectingQuery, KW_GROUPBY);
 	sq->havingPos = findSubString(selectingQuery, KW_HAVING);
+	sq->outerJoinPos = findSubString(selectingQuery, KW_OUTER_JOIN);
 
 	// Check if some clauses appear in the query or not
 	if (sq->wherePos)   sq->hasWhere = TRUE;   else sq->hasWhere = FALSE;
 	if (sq->groupbyPos) sq->hasGroupby = TRUE; else sq->hasGroupby = FALSE;
 	if (sq->havingPos)  sq->hasHaving = TRUE;  else sq->hasHaving = FALSE;
-	
+	if (sq->outerJoinPos)  sq->hasOuterJoin = TRUE;  else sq->hasOuterJoin = FALSE;
+
 	// Init length variables
 	sq->selectElementsNum = 0;
 	sq->fromElementsNum = 0;
 	sq->onNum = 0;
-	for (i = 0; i < MAX_N_TABLES; i++)
+	sq->onOuterJoinNum = 0;
+	sq->outerJoinComplementTablesNum = 0;
+	sq->outerJoinMainTablesNum = 0;
+	for (i = 0; i < MAX_NUMBER_OF_TABLES; i++) {
 		sq->onConditionsNum[i] = 0;
+		sq->onOuterJoinConditionsNum[i] = 0;
+	}		
 	sq->whereConditionsNum = 0;
 	sq->groupbyElementsNum = 0;
 	sq->havingConditionsNum = 0;
@@ -40,14 +51,13 @@ SelectingQuery analyzeSelectingQuery(char *selectingQuery) {
 		Spit with commas as separator
 	*/
 	// Get select clause as string
+	//T: ex: select a, b, c from d ==> sq->select = "a, b, c "
 	sq->select = subString(selectingQuery, sq->selectPos + LEN(KW_SELECT), sq->fromPos);
 
-	// Copy q->select to process
+	// Copy sq->select to process
 	tmp = copy(sq->select);
-		
 	// Split elements
 	dammf_split(tmp, ",", sq->selectElements, &(sq->selectElementsNum), TRUE);
-
 	// Trim leading & trailing spaces of each element
 	for (i = 0; i < sq->selectElementsNum; i++)
 		sq->selectElements[i] = dammf_trim(sq->selectElements[i]);
@@ -68,131 +78,231 @@ SelectingQuery analyzeSelectingQuery(char *selectingQuery) {
 
 	// Check if 'from' clause contain 'join' keyword or not
 	// If not, separate using comma
-	if (findSubString(tmp, KW_JOIN) == NULL){
+	if (findSubString(tmp, KW_JOIN) == NULL) {
 		// Save tables' name to obj->fromElements[]
 		dammf_split(tmp, ",", sq->fromElements, &(sq->fromElementsNum), TRUE);
 
 		// Trim leading & trailing white spaces in tables' name
 		for (i = 0; i < sq->fromElementsNum; i++)
 			sq->fromElements[i] = dammf_trim(sq->fromElements[i]);
-	} else {
-		// 'From' clause contain ' join ' or ' inner join '
-		int i, j;
-		char *joinKeywords[] = {KW_INNERJOIN, KW_JOIN};
-		int joinKeywordsLen[] = {LEN(KW_INNERJOIN), LEN(KW_JOIN)};
-		int joinKeywordsNum = 2;
+	}
+	else {
+		if (sq->hasOuterJoin) {
+			int i, j;
+			char *start, *end;
+			//T: tìm vị trí OUTER JOIN
+			char *OuterJoinPosSearch;
+			char *outerJoinPosArr[MAX_NUMBER_OF_ELEMENTS];
+			int outerJoinPosArrLen = 0;
 
-		// Clauses contain table with 'on' conditions
-		char *jclause[MAX_N_ELEMENTS];
-		int jclauseLen = 0;
+			start = tmp;
+			OuterJoinPosSearch = tmp;
 
-		char *start, *end;
-
-		char *joinPosSearch, *innerJoinPosSearch;
-		char *joinPosArr[MAX_N_ELEMENTS];
-		char *innerJoinPosArr[MAX_N_ELEMENTS];
-		int joinPosArrLen = 0, innerJoinPosArrLen = 0;
-
-		start = tmp;
-
-		// Split 'join' / 'inner join', using temporary array
-		// temporary array contains ' on ' keyword
-		/*while (TRUE) {
-			i = 0;
-			while ((end = findSubString(start, joinKeywords[i])) == NULL && i < joinKeywordsNum-1) i++;
-			if (end){
-				jclause[jclauseLen++] = subString(tmp, start, end);
-				start = end + joinKeywordsLen[i];
-			} else break;
-		}
-		jclause[jclauseLen++] = takeStrFrom(tmp, start);
-		*/
-
-		joinPosSearch = tmp;
-		innerJoinPosSearch = tmp;
-
-		// find join
-		while (TRUE) {
-			end = findSubString(joinPosSearch, KW_JOIN);
-			if (end) {
-				joinPosArr[joinPosArrLen++] = end;
-				joinPosSearch = end + LEN(KW_JOIN);
-			} else {
-				break;
+			end = findSubString(OuterJoinPosSearch, KW_OUTER_JOIN);
+			end = end - 5;
+			outerJoinPosArr[outerJoinPosArrLen++] = subString(tmp, start, end);
+			//analyze the type of outer join
+			end = subString(end, end, end + 6);
+			end = dammf_trim(end);
+			if (STR_EQUAL_CI(end, "LEFT")) {
+				sq->outerJoinType = "LEFT";
 			}
-		}
-
-		// find inner join
-		while (TRUE) {
-			end = findSubString(innerJoinPosSearch, KW_INNERJOIN);
-			if (end) {
-				innerJoinPosArr[innerJoinPosArrLen++] = end;
-				innerJoinPosSearch = end + LEN(KW_INNERJOIN);
-			} else {
-				break;
+			if (STR_EQUAL_CI(end, "RIGHT")) {
+				sq->outerJoinType = "RIGHT";
 			}
-		}
+			if (STR_EQUAL_CI(end, "FULL")) {
+				sq->outerJoinType = "FULL";
+			}
+			//find outer join
+			while (TRUE) {
+				end = findSubString(OuterJoinPosSearch, KW_OUTER_JOIN);
+				if (end) {
+					start = end + LEN(KW_OUTER_JOIN);
+					outerJoinPosArr[outerJoinPosArrLen++] =takeStrFrom(OuterJoinPosSearch, start);
+					OuterJoinPosSearch = end + LEN(KW_OUTER_JOIN);			
+				}
+				else {
+					break;
+				}
+			}
+			
 
-		// merge + split
-		for (i = 0; i < joinPosArrLen; i++) {
-			Boolean isInnerJoin = FALSE;
-			for (j = 0; j < innerJoinPosArrLen; j++) {
-				if ((innerJoinPosArr[j] + 6) == joinPosArr[i]) {
-					isInnerJoin = TRUE;
+			for (i = 0; i < outerJoinPosArrLen; i++) {
+				end = findSubString(outerJoinPosArr[i], KW_ON);
+				if (end) {
+					tmp = takeStrTo(outerJoinPosArr[i], end); //T: tmp lúc này là tên bảng ngay trước on
+					//Tên bảng đứng trước ON: nếu là LEFT thì là bảng phụ, nếu là right thì là bảng chính
+					char *currentTableName = dammf_trim(tmp);
+					sq->fromElements[sq->fromElementsNum++] = currentTableName;
+
+					if (STR_EQUAL_CI(sq->outerJoinType, "LEFT")) {
+						sq->outerJoinComplementTables[sq->outerJoinComplementTablesNum++] = currentTableName;
+					}
+					else if (STR_EQUAL_CI(sq->outerJoinType, "RIGHT")) {
+						sq->outerJoinMainTables[sq->outerJoinMainTablesNum++] = currentTableName;
+					}
+					else if (STR_EQUAL_CI(sq->outerJoinType, "FULL")) {
+						sq->outerJoinMainTables[sq->outerJoinMainTablesNum++] = currentTableName;
+					}
+					// Analyze logic expression
+					tmp = takeStrFrom(outerJoinPosArr[i], end + LEN(KW_ON));
+					//T: tmp lúc này là biểu thức logic 
+					analyzeLogicExpression(tmp, sq->onOuterJoinConditions[sq->onOuterJoinNum], &(sq->onOuterJoinConditionsNum[sq->onOuterJoinNum]));
+					(sq->onOuterJoinNum)++;
+					free(tmp);
+
+					free(outerJoinPosArr[i]);
+				}
+				else {
+					// join with no 'on'
+					// tmp = jclause = table name
+					//Tên bảng đứng một mình: nếu là LEFT thì là bảng chính, nếu là right thì là bảng phụ
+					char *currentTableName = dammf_trim(outerJoinPosArr[i]);
+					if (STR_EQUAL_CI(sq->outerJoinType, "RIGHT")) {
+						sq->outerJoinComplementTables[sq->outerJoinComplementTablesNum++] = currentTableName;
+					}
+					else if (STR_EQUAL_CI(sq->outerJoinType, "LEFT")) {
+						sq->outerJoinMainTables[sq->outerJoinMainTablesNum++] = currentTableName;
+					}
+					else if (STR_EQUAL_CI(sq->outerJoinType, "FULL")) {
+						sq->outerJoinMainTables[sq->outerJoinMainTablesNum++] = currentTableName;
+					}
+					sq->fromElements[sq->fromElementsNum++] = currentTableName;
 				}
 			}
 
-			if (isInnerJoin) {
-				if (end = findSubString(start, KW_INNERJOIN)) {
+		}
+		else if (!sq->hasOuterJoin) {
+			sq->hasJoin = TRUE;
+			// 'From' clause contain ' join ' or ' inner join '
+			//T: !important: đoạn code này có khả năng cao phải tùy biến cho phù hợp với đề tài sắp phát triển
+			int i, j;
+			char *joinKeywords[] = { KW_INNERJOIN, KW_JOIN };
+			int joinKeywordsLen[] = { LEN(KW_INNERJOIN), LEN(KW_JOIN) };
+			int joinKeywordsNum = 2;
+
+			// Clauses contain table with 'on' conditions
+			char *jclause[MAX_NUMBER_OF_ELEMENTS];
+			int jclauseLen = 0;
+
+			char *start, *end;
+			//T: tìm vị trí JOIN
+			char *joinPosSearch, *innerJoinPosSearch;
+			char *joinPosArr[MAX_NUMBER_OF_ELEMENTS];
+			char *innerJoinPosArr[MAX_NUMBER_OF_ELEMENTS];
+			int joinPosArrLen = 0, innerJoinPosArrLen = 0;
+
+			start = tmp;
+
+			// Split 'join' / 'inner join', using temporary array
+			// temporary array contains ' on ' keyword
+			/*while (TRUE) {
+				i = 0;
+				while ((end = findSubString(start, joinKeywords[i])) == NULL && i < joinKeywordsNum-1) i++;
+				if (end){
 					jclause[jclauseLen++] = subString(tmp, start, end);
-					start = end + LEN(KW_INNERJOIN);
+					start = end + joinKeywordsLen[i];
+				} else break;
+			}
+			jclause[jclauseLen++] = takeStrFrom(tmp, start);
+			*/
+
+			joinPosSearch = tmp;
+			innerJoinPosSearch = tmp;
+			//T: Tức là kiếm join, kiếm inner join, sau đó merge. Nếu kiếm đc inner join thì đương nhiên cũng có join trong đó
+			/*T: vd: a inner join b
+					-> joinPos = join b
+					->innerJoinPos = inner join b
+					-> nhưng cả 2 giống nhau -> cần merge
+			*/
+			// find join
+			while (TRUE) {
+				end = findSubString(joinPosSearch, KW_JOIN);
+				if (end) {
+					joinPosArr[joinPosArrLen++] = end;
+					joinPosSearch = end + LEN(KW_JOIN);
 				}
-			} else {
-				if (end = findSubString(start, KW_JOIN)) {
-					jclause[jclauseLen++] = subString(tmp, start, end);
-					start = end + LEN(KW_JOIN);
+				else {
+					break;
 				}
 			}
 
-		}
-		jclause[jclauseLen++] = takeStrFrom(tmp, start);
+			// find inner join
+			while (TRUE) {
+				end = findSubString(innerJoinPosSearch, KW_INNERJOIN);
+				if (end) {
+					innerJoinPosArr[innerJoinPosArrLen++] = end;
+					innerJoinPosSearch = end + LEN(KW_INNERJOIN);
+				}
+				else {
+					break;
+				}
+			}
 
-		free(tmp);
+			// merge + split
+			for (i = 0; i < joinPosArrLen; i++) {
+				Boolean isInnerJoin = FALSE;
+				for (j = 0; j < innerJoinPosArrLen; j++) {
+					if ((innerJoinPosArr[j] + 6) == joinPosArr[i]) {
+						isInnerJoin = TRUE;
+					}
+				}
+				if (isInnerJoin) {
+					if (end = findSubString(start, KW_INNERJOIN)) {
+						jclause[jclauseLen++] = subString(tmp, start, end);
+						start = end + LEN(KW_INNERJOIN);
+					}
+				}
+				else {
+					if (end = findSubString(start, KW_JOIN)) {
+						jclause[jclauseLen++] = subString(tmp, start, end);
+						start = end + LEN(KW_JOIN);
+					}
+				}
+			}
 
-		// Save tables' name to obj->fromArgs[] after trim leading & trailing white spaces in tables' name
-		for (i = 0; i < jclauseLen; i++) {
-			end = findSubString(jclause[i], KW_ON);
-			if (end) {
-				tmp = takeStrTo(jclause[i], end);
-				sq->fromElements[sq->fromElementsNum++] = dammf_trim(tmp);
+			jclause[jclauseLen++] = takeStrFrom(tmp, start);
+			free(tmp);
 
-				// Analyze logic expression
-				tmp = takeStrFrom(jclause[i], end + LEN(KW_ON));
-				analyzeLogicExpression(tmp, sq->onConditions[sq->onNum], &(sq->onConditionsNum[sq->onNum]));
-				(sq->onNum)++;
-				free(tmp);
+			// Save tables' name to obj->fromArgs[] after trim leading & trailing white spaces in tables' name
+			for (i = 0; i < jclauseLen; i++) {
+				end = findSubString(jclause[i], KW_ON);
+				if (end) {
+					tmp = takeStrTo(jclause[i], end); //T: tmp lúc này là tên bảng ngay trước on
+					sq->fromElements[sq->fromElementsNum++] = dammf_trim(tmp);
 
-				free(jclause[i]);
-			} else {
-				// join with no 'on'
-				// tmp = jclause = table name
-				sq->fromElements[sq->fromElementsNum++] = dammf_trim(jclause[i]);
+					// Analyze logic expression
+					tmp = takeStrFrom(jclause[i], end + LEN(KW_ON));
+					//T: tmp lúc này là biểu thức logic 
+					analyzeLogicExpression(tmp, sq->onConditions[sq->onNum], &(sq->onConditionsNum[sq->onNum]));
+					(sq->onNum)++;
+					free(tmp);
+
+					free(jclause[i]);
+				}
+				else {
+					// join with no 'on'
+					// tmp = jclause = table name
+					sq->fromElements[sq->fromElementsNum++] = dammf_trim(jclause[i]);
+				}
 			}
 		}
 	}
-	
+
+
 	/*
 		PROCESS 'WHERE' CLAUSE
 	*/
 	// Get 'where' clause
-	if (sq->hasWhere){
+	if (sq->hasWhere) {
 		rightLim = nextElement(sq, KW_WHERE);
 		if (rightLim)
 			sq->where = subString(selectingQuery, sq->wherePos + LEN(KW_WHERE), rightLim);
 		else
 			sq->where = takeStrFrom(selectingQuery, sq->wherePos + LEN(KW_WHERE));
 		analyzeLogicExpression(sq->where, sq->whereConditions, &(sq->whereConditionsNum));
-	} else {
+	}
+	else {
 		sq->where = NULL;
 	}
 
@@ -200,7 +310,7 @@ SelectingQuery analyzeSelectingQuery(char *selectingQuery) {
 		PROCESS GROUP BY CLAUSE
 	*/
 	// Get 'group by' clause as string
-	if (sq->hasGroupby){
+	if (sq->hasGroupby) {
 		rightLim = nextElement(sq, KW_GROUPBY);
 		if (rightLim)
 			sq->groupby = subString(selectingQuery, sq->groupbyPos + LEN(KW_GROUPBY), rightLim);
@@ -212,32 +322,38 @@ SelectingQuery analyzeSelectingQuery(char *selectingQuery) {
 		// Trim leading & trailing spaces of each element
 		for (i = 0; i < sq->groupbyElementsNum; i++)
 			sq->groupbyElements[i] = dammf_trim(sq->groupbyElements[i]);
-	} else {
+	}
+	else {
 		sq->groupby = NULL;
 	}
 
 	/*
 		PROCESS HAVING CLAUSE
 	*/
-	if (sq->hasHaving){
+	if (sq->hasHaving) {
 		rightLim = nextElement(sq, KW_HAVING);
 		if (rightLim)
 			sq->having = subString(selectingQuery, sq->havingPos + LEN(KW_HAVING), rightLim);
 		else
 			sq->having = takeStrFrom(selectingQuery, sq->havingPos + LEN(KW_HAVING));
 		analyzeLogicExpression(sq->having, sq->havingConditions, &(sq->havingConditionsNum));
-	} else {
+	}
+	else {
 		sq->having = NULL;
 	}
 
 	return sq;
 }
 
-/* STANDARDIZE SELECTING QUERY
+//STANDARDIZE SELECTING QUERY
+/*
+	T: function standardizeSelectingQuery.
+	1. Xóa dấu khoảng trắng ở đầu
+	2. kiểm tra vị trí của select có hợp lệ ko
+	3. Xóa khoảng trắng dư thừa
 */
 Boolean standardizeSelectingQuery(char *selectingQuery) {
-
-	// 0. Trim the leading spaces
+	// 0. Trim the leading spaces, like LTRIM in SQL
 	{
 		int len = LEN(selectingQuery);
 		int start = 0;
@@ -247,10 +363,9 @@ Boolean standardizeSelectingQuery(char *selectingQuery) {
 
 		while (selectingQuery[start] && selectingQuery[start] == ' ') start++;
 		for (i = start; i < len; i++)
-			selectingQuery[i-start] = selectingQuery[i];
-		selectingQuery[i-start] = 0;
+			selectingQuery[i - start] = selectingQuery[i];
+		selectingQuery[i - start] = 0;
 	}
-
 	// 1. Check if the 'select' keyword is at the beginning of selecting query, if not, exit
 	{
 		char *selectPos = findSubString(selectingQuery, KW_SELECT);
@@ -262,150 +377,213 @@ Boolean standardizeSelectingQuery(char *selectingQuery) {
 	{
 		int i, j;
 		int len = LEN(selectingQuery);
-		for (i = 0; i < len-1; i++)
-			if (selectingQuery[i] == ' ' && selectingQuery[i+1] == ' ') {
-				for (j = i; j < len-1; j++)
-					selectingQuery[j] = selectingQuery[j+1];
+		for (i = 0; i < len - 1; i++)
+			if (selectingQuery[i] == ' ' && selectingQuery[i + 1] == ' ') {
+				for (j = i; j < len - 1; j++)
+					selectingQuery[j] = selectingQuery[j + 1];
 				selectingQuery[j] = 0;
 				i--;
 			}
 	}
-
+	//printf("result: %s\n", selectingQuery);
 	return TRUE;
 }
 
 // NEXT ELEMENT
+/*
+	T:
+	Công dụng: trả về chuỗi con, bắt đầu bằng phần tử tiếp theo của currentElement, trả về NULL nếu ko còn phần tử nào
+	Thứ tự: SELECT, FROM, WHERE, GROUP BY, HAVING
+	current = SELECT -> trả về đoạn từ FROM trở đi, ...
+	vd: TVG:
+	select khoa.ma_khoa, khoa.ten_khoa, lop_sh.ten_lop, count(sinh_vien.ma_sv)
+	from khoa,lop_sh,sinh_vien
+	where khoa.ma_khoa = lop_sh.ma_khoa and sinh_vien.ma_lop = lop_sh.ma_lop and sinh_vien.que_quan = 'Da Nang'
+	group by khoa.ten_khoa, lop_sh.ten_lop, khoa.ma_khoa
+	---------------
+	curent element:  from
+	-> return:  where khoa.ma_khoa = lop_sh.ma_khoa and sinh_vien.ma_lop = lop_sh.ma_lop and sinh_vien.que_quan = 'Da Nang' group by khoa.ten_khoa, lop_sh.ten_lop, khoa.ma_khoa
+	curent element:  where
+	-> return:  group by khoa.ten_khoa, lop_sh.ten_lop, khoa.ma_khoa
+	curent element:  group by
+	-> return: (null)
+	---------------
+	Tóm lại: X = {SELECT, FROM, WHERE, GROUP BY, HAVING}
+	-> nếu currentElement là x[i] thì tức là muốn lấy đoạn bắt đầu từ x[i+1] trở đi
+*/
 char *nextElement(SelectingQuery selectingQuery, char *currentElement) {
 	char *rs;
 
-	if (selectingQuery->hasWhere && STR_EQUAL(currentElement, KW_FROM)) 
+	if (selectingQuery->hasWhere && STR_EQUAL(currentElement, KW_FROM))
 		rs = selectingQuery->wherePos;
 
-	else if (selectingQuery->hasGroupby && 
-		    (STR_EQUAL(currentElement, KW_FROM) || 
-			 STR_EQUAL(currentElement, KW_WHERE)))
+	else if (selectingQuery->hasGroupby &&
+		(STR_EQUAL(currentElement, KW_FROM) ||
+			STR_EQUAL(currentElement, KW_WHERE)))
 		rs = selectingQuery->groupbyPos;
 
-	else if (selectingQuery->hasHaving && 
-		    (STR_EQUAL(currentElement, KW_FROM) || 
-			 STR_EQUAL(currentElement, KW_WHERE) || 
-			 STR_EQUAL(currentElement, KW_GROUPBY)))
+	else if (selectingQuery->hasHaving &&
+		(STR_EQUAL(currentElement, KW_FROM) ||
+			STR_EQUAL(currentElement, KW_WHERE) ||
+			STR_EQUAL(currentElement, KW_GROUPBY)))
 		rs = selectingQuery->havingPos;
 
 	else rs = NULL;
-
+	//printf("curent element: %s - return: %s\n", currentElement, rs);
 	return rs;
 }
 
 // ANALYZE LOGIC EXPRESSION
+/*
+	T: function analyze logic expression (phân tích biểu thức logic)
+	Hành động thực hiện:
+	đầu tiên là split theo AND, trong mỗi AND split theo OR.
+	Điều này là do logic expression được quy về dạng chuẩn tắc hội: ...AND...AND (...OR...OR...) AND...
+	Cho mỗi điều kiện trong or, kiểm tra biểu thức so sánh là so sánh chuỗi hay so sánh số rồi chuyển từ dạng
+	cú pháp PL/PgSQL về dạng cú pháp C:
+	vd: quequan = 'Da Nang' -> STR_EQUAL_LI(quequan, "DaNang")
+		tuoi <> 3			-> tuoi != 3
+		tuoi = 10			-> tuoi == 10
+*/
 void analyzeLogicExpression(char *logicExpression, char **resultSet, int *resultLen) {
 	int i, j, k;
+	printf("logic expression = %s\n", logicExpression);
 	char *tmp = trim(logicExpression);
 	Boolean numCompare = TRUE;
-	dammf_split(tmp, KW_AND, resultSet, resultLen, FALSE);
 
+	dammf_split(tmp, KW_AND, resultSet, resultLen, FALSE);
 	// Process each condition
 	for (i = 0; i < (*resultLen); i++) {
-		char *or[MAX_N_EXPRESSIONS];
+		char * or [MAX_NUMBER_OF_EXPRESSIONS];
 		int orLen = 0;
 
 		resultSet[i] = dammf_replaceAll(resultSet[i], "<>", "!=");
 		resultSet[i] = dammf_trim(resultSet[i]);
-		
+
 		// Get or array
-		dammf_split(resultSet[i], KW_OR, or, &orLen, FALSE);
-		
+		dammf_split(resultSet[i], KW_OR, or , &orLen, FALSE);
+
 		resultSet[i] = copy("");
 
 		for (j = 0; j < orLen; j++) {
-			
+
 			char *not;
-			or[j] = dammf_trim(or[j]);
-			not = findSubString(or[j], KW_NOT);
+			or [j] = dammf_trim(or [j]);
+			not = findSubString(or [j], KW_NOT);
 			numCompare = TRUE;
 
 			// Check if 'not ' is a keyword
-			if (not && (not == or[j] || (not != or[j] && !IS_LETTER(*(not-1))))) {
+			/*T: chỗ này hơi phức tạp
+				'not ' là keyword nếu tìm thấy 'not' trong or[j] và:
+				1. not == or[j].
+					ví dụ: OR NOT ma_sv = NULL
+						-> or[j] = NOT ma_sv = NULL
+						-> not = NOT ma_sv = NULL
+						=> not == or[j]
+				2. not != or[j] && trước not không phải là ký tự.
+					ví dụ: OR A.Column NOT TRUE
+						-> or[j] = A.Column NOT TRUE
+						-> not = NOT TRUE
+						=> not != or[j]
+				not-1 = ' ' ko phải ký tự -> not là keyword
+			*/
+			/*T: Nếu NOT là keyword, thì chuyển về dạng !()
+				ví dụ:
+			*/
+			if (not && (not == or [j] || (not != or [j] && !IS_LETTER(*(not- 1))))) {
 				char *k;
 
 				// n -> !
 				*not = '!';
-
 				// o -> (
-				*(not+1) = '(';
+				*(not+ 1) = '(';
 
-				for (k = not+2; *k; k++)
-					if (*(k+1)) *k = *(k+1);
+				for (k = not+ 2; *k; k++)
+					if (*(k + 1)) *k = *(k + 1);
 
-				*(k-1) = ')';
+				*(k - 1) = ')';
+
 			}
 
-			for (k = 0; k < LEN(or[j]); k++)
-				if (or[j][k] == '\'') {
+			/*T: numCompare = true nếu or[j] đang so sánh số, = false nếu so sánh chuỗi. nếu tìm thấy dấu ' trong or[j] tức là so sánh chuỗi*/
+			for (k = 0; k < LEN(or [j]); k++)
+				if (or [j][k] == '\'') {
 					numCompare = FALSE;
-					or[j][k] = '\"';
+					or [j][k] = '\"';
 				}
 
+			//T: nếu đang so sánh chuỗi
 			if (!numCompare) {
-				char *compare[MAX_N_ELEMENTS];
+				char *compare[MAX_NUMBER_OF_ELEMENTS];
 				int len;
-				split(or[j], "!=", compare, &len, FALSE);
+				//printf("or[%d] = %s\n", j, or [j]);
+				split(or [j], "!=", compare, &len, FALSE);
+				//printf("len = %d\n", len);
+				/*
+					T: split theo "!=", nếu len = 2 tức là điều kiện so sánh chuỗi là != thiệt
+					Nếu split theo "!=" mà len = 1 tức là ko có != ở trỏng, tức là điều kiện là "="
 
-				if (len == 2) {	
-					FREE(or[j]);
-					or[j] = copy("");
-					if (compare[0][0] != '!') or[j] = dammf_append(or[j], "STR_INEQUAL_CI(");
+				*/
+				if (len == 2) {
+					//T: trường hợp !=
+					FREE(or [j]);
+					or [j] = copy("");
+					if (compare[0][0] != '!') or [j] = dammf_append(or [j], "STR_INEQUAL_CI(");
 					else {
-						or[j] = dammf_append(or[j], "!STR_INEQUAL_CI(");
+						or [j] = dammf_append(or [j], "!STR_INEQUAL_CI(");
 						compare[0][0] = ' ';
 					}
-					or[j] = dammf_append(or[j], compare[0]);
-					or[j] = dammf_append(or[j], ", ");
-					or[j] = dammf_append(or[j], compare[1]);
-					or[j] = dammf_append(or[j], ")");
-				} else if (len == 1) {
-					FREE(compare[0]);
-					dammf_split(or[j], "=", compare, &len, FALSE);	
-					or[j] = copy("");
-					if (compare[0][0] != '!')
-						or[j] = dammf_append(or[j], "STR_EQUAL_CI(");
-					else {
-						or[j] = dammf_append(or[j], "!STR_EQUAL_CI(");
-						compare[0][0] = ' ';
-					}
-					or[j] = dammf_append(or[j], compare[0]);
-					or[j] = dammf_append(or[j], ", ");
-					or[j] = dammf_append(or[j], compare[1]);
-					or[j] = dammf_append(or[j], ")");
+					or [j] = dammf_append(or [j], compare[0]);
+					or [j] = dammf_append(or [j], ", ");
+					or [j] = dammf_append(or [j], compare[1]);
+					or [j] = dammf_append(or [j], ")");
 				}
-
+				else if (len == 1) {
+					// =
+					FREE(compare[0]);
+					dammf_split(or [j], "=", compare, &len, FALSE);
+					or [j] = copy("");
+					if (compare[0][0] != '!')
+						or [j] = dammf_append(or [j], "STR_EQUAL_CI(");
+					else {
+						or [j] = dammf_append(or [j], "!STR_EQUAL_CI(");
+						compare[0][0] = ' ';
+					}
+					or [j] = dammf_append(or [j], compare[0]);
+					or [j] = dammf_append(or [j], ", ");
+					or [j] = dammf_append(or [j], compare[1]);
+					or [j] = dammf_append(or [j], ")");
+				}
+				//T: xóa bộ nhớ 
 				for (k = 0; k < len; k++)
 					FREE(compare[k]);
-			} else {
+			}
+			else {
+				//T: else tức là đang so sánh số (compareNum = TRUE)
 				/*char *compare[2];
 				int len;
-
 				split(or[j], "!=", compare, &len, FALSE);
 				if (len == 1)
 					or[j] = dammf_replaceAll(or[j], "=", "==");
 				free(compare[0]);
 				if (len == 2) free(compare[1]);*/
 
-				char *pos = strstr(or[j], "=");
-				char *a = "!", *b = ">", *c = "<";
-				if (pos && *(pos-1) != '!' && *(pos-1) != '>' && *(pos-1) != '<') {
-					or[j] = dammf_replaceAll(or[j], "=", "==");
+				char *pos = strstr(or [j], "=");
+				//T: tự nhiên dòng này khai báo xong ko dùng
+		//		char *a = "!", *b = ">", *c = "<";
+				if (pos && *(pos - 1) != '!' && *(pos - 1) != '>' && *(pos - 1) != '<') {
+					or [j] = dammf_replaceAll(or [j], "=", "==");
 				}
 			}
 
-			resultSet[i] = dammf_append(resultSet[i], or[j]);
+			resultSet[i] = dammf_append(resultSet[i], or [j]);
 
-			if (j < orLen-1)
+			if (j < orLen - 1)
 				resultSet[i] = dammf_append(resultSet[i], " || ");
 		}
 
 		for (k = 0; k < orLen; k++) {
-			FREE(or[k]);
+			FREE(or [k]);
 		}
 	}
 }
@@ -430,6 +608,10 @@ void freeSelectingQuery(SelectingQuery *sq) {
 		for (i = 0; i < (*sq)->onNum; i++)
 			for (j = 0; j < (*sq)->onConditionsNum[i]; j++)
 				FREE((*sq)->onConditions[i][j]);
+
+		for (i = 0; i < (*sq)->onOuterJoinNum; i++)
+			for (j = 0; j < (*sq)->onOuterJoinConditionsNum[i]; j++)
+				FREE((*sq)->onOuterJoinConditions[i][j]);
 
 		for (i = 0; i < (*sq)->whereConditionsNum; i++)
 			FREE((*sq)->whereConditions[i]);

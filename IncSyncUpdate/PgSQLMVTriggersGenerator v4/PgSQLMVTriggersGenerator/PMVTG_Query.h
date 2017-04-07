@@ -28,6 +28,13 @@
 #define KW_GROUPBY										" group by "
 #define KW_HAVING										" having "
 
+/*version 5 - Support outer join clause*/
+#define KW_OUTER_JOIN									" outer join "
+#define KW_LEFT_OUTER_JOIN								" left outer join "
+#define KW_RIGHT_OUTER_JOIN								" right outer join "
+#define KW_FULL_OUTER_JOIN								" full outer join "
+
+
 /*
 	LOGIC KEYWORDS - KW PREFIX
 */
@@ -42,7 +49,7 @@
 #define AF_COUNT										"count("
 #define AF_AVG											"avg("
 #define AF_MIN											"min("
-#define _AF_MAX											"max("
+#define AF_MAX_											"max("
 
 /*
 	TYPE					PMVTG_SELECTING_QUERY
@@ -53,38 +60,50 @@
 typedef struct s_SelectingQuery *SelectingQuery;
 struct s_SelectingQuery {
 	// Pointers for the positions of clauses' keyword
-	char *selectPos, *fromPos, *wherePos, *groupbyPos, *havingPos;
+	char *selectPos, *fromPos, *wherePos, *groupbyPos, *havingPos, *outerJoinPos;
 
 	// Clauses' content (as 'malloc' allocated strings)
 	char *select, *from, *where, *groupby, *having;
 
 	// Columns list
-	char *selectElements[MAX_N_ELEMENTS];
+	char *selectElements[MAX_NUMBER_OF_ELEMENTS];
 	int selectElementsNum;
 
 	// Tables list
-	char *fromElements[MAX_N_ELEMENTS];
+	char *fromElements[MAX_NUMBER_OF_ELEMENTS];
 	int fromElementsNum;
 
 	// On conditions
-	char *onConditions[MAX_N_TABLES][MAX_N_ELEMENTS];
-	int onConditionsNum[MAX_N_TABLES];
+	char *onConditions[MAX_NUMBER_OF_TABLES][MAX_NUMBER_OF_ELEMENTS];
+	int onConditionsNum[MAX_NUMBER_OF_TABLES];
 	int onNum;
-	
+
+	//On Outer join conditions
+	char *onOuterJoinConditions[MAX_NUMBER_OF_TABLES][MAX_NUMBER_OF_ELEMENTS];
+	int onOuterJoinConditionsNum[MAX_NUMBER_OF_TABLES];
+	int onOuterJoinNum;
+
+	char *outerJoinMainTables[MAX_NUMBER_OF_TABLES];
+	int outerJoinMainTablesNum;
+	char *outerJoinComplementTables[MAX_NUMBER_OF_TABLES];
+	int outerJoinComplementTablesNum;
+
 	// Where conditions
-	char *whereConditions[MAX_N_ELEMENTS];
+	char *whereConditions[MAX_NUMBER_OF_ELEMENTS];
 	int whereConditionsNum;
 
 	// Having condition
-	char *havingConditions[MAX_N_ELEMENTS];
+	char *havingConditions[MAX_NUMBER_OF_ELEMENTS];
 	int havingConditionsNum;
 
 	// Group by elements
-	char *groupbyElements[MAX_N_ELEMENTS];
+	char *groupbyElements[MAX_NUMBER_OF_ELEMENTS];
 	int groupbyElementsNum;
 
 	// Determine if each clause appeared or not
-	Boolean hasJoin, hasWhere, hasGroupby, hasHaving;
+	Boolean hasJoin, hasWhere, hasGroupby, hasHaving, hasOuterJoin;
+	char *outerJoinType;
+	
 };
 
 /* CONSTRUCTOR

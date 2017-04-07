@@ -1,21 +1,10 @@
 #pragma once
 
-#ifdef WIN64
-	#define _CRT_SECURE_NO_WARNINGS
-#else ifdef WIN32
-#define _CRT_SECURE_NO_WARNINGS
-#endif
-
 #include <conio.h>
 #include <stdlib.h>
 #include <libpq-fe.h>
 #include "PMVTG_Boolean.h"
 #include "PMVTG_Config.h"
-
-#ifdef WIN32
-#define scanf scanf_s
-//#define strcpy strcpy_s
-#endif
 
 struct s_SelectingQuery;
 struct s_Table;
@@ -24,33 +13,33 @@ struct s_Column;
 #define PREPARE_STATEMENT const char					*PREPARED_STATEMENT_connectionInfo;									\
 						  PGconn						*PREPARED_STATEMENT_connection;										\
 						  PGresult						*PREPARED_STATEMENT_queryResult;									\
-						  char							PREPARED_STATEMENT_query[MAX_L_QUERY];								\
+						  char							PREPARED_STATEMENT_query[MAX_LENGTH_OF_QUERY];								\
 						  struct s_SelectingQuery		*PREPARED_STATEMENT_selectingQuery;									\
-						  Table							PREPARED_STATEMENT_table[MAX_N_TABLES];								\
-						  Column						PREPARED_STATEMENT_selectedColumn[MAX_N_SELECT_ELEMENT];			\
+						  Table							PREPARED_STATEMENT_table[MAX_NUMBER_OF_TABLES];								\
+						  Column						PREPARED_STATEMENT_selectedColumn[MAX_NUMBER_OF_SELECT_ELEMENT];			\
 						  int							PREPARED_STATEMENT_nSelectedCol = 0;								\
-						  char							*PREPARED_STATEMENT_outConditions[MAX_N_TABLES][MAX_N_ELEMENTS];	\
-						  int							PREPARED_STATEMENT_outConditionsElementNum[MAX_N_TABLES];			\
-						  char							*PREPARED_STATEMENT_inConditions[MAX_N_TABLES][MAX_N_ELEMENTS];		\
-						  char							*PREPARED_STATEMENT_inConditionsOld[MAX_N_TABLES][MAX_N_ELEMENTS];	\
-						  char							*PREPARED_STATEMENT_inConditionsNew[MAX_N_TABLES][MAX_N_ELEMENTS];	\
-						  int							PREPARED_STATEMENT_inConditionsElementNum[MAX_N_TABLES];			\
-						  char							*PREPARED_STATEMENT_binConditions[MAX_N_TABLES][MAX_N_ELEMENTS];	\
-						  int							PREPARED_STATEMENT_binConditionsElementNum[MAX_N_TABLES];			\
-						  char							*PREPARED_STATEMENT_firstCheckingCondition[MAX_N_TABLES];			\
-						  char							*PREPARED_STATEMENT_firstCheckingConditionOld[MAX_N_TABLES];		\
-						  char							*PREPARED_STATEMENT_firstCheckingConditionNew[MAX_N_TABLES];		\
+						  char							*PREPARED_STATEMENT_outConditions[MAX_NUMBER_OF_TABLES][MAX_NUMBER_OF_ELEMENTS];	\
+						  int							PREPARED_STATEMENT_outConditionsElementNum[MAX_NUMBER_OF_TABLES];			\
+						  char							*PREPARED_STATEMENT_inConditions[MAX_NUMBER_OF_TABLES][MAX_NUMBER_OF_ELEMENTS];		\
+						  char							*PREPARED_STATEMENT_inConditionsOld[MAX_NUMBER_OF_TABLES][MAX_NUMBER_OF_ELEMENTS];	\
+						  char							*PREPARED_STATEMENT_inConditionsNew[MAX_NUMBER_OF_TABLES][MAX_NUMBER_OF_ELEMENTS];	\
+						  int							PREPARED_STATEMENT_inConditionsElementNum[MAX_NUMBER_OF_TABLES];			\
+						  char							*PREPARED_STATEMENT_binConditions[MAX_NUMBER_OF_TABLES][MAX_NUMBER_OF_ELEMENTS];	\
+						  int							PREPARED_STATEMENT_binConditionsElementNum[MAX_NUMBER_OF_TABLES];			\
+						  char							*PREPARED_STATEMENT_firstCheckingCondition[MAX_NUMBER_OF_TABLES];			\
+						  char							*PREPARED_STATEMENT_firstCheckingConditionOld[MAX_NUMBER_OF_TABLES];		\
+						  char							*PREPARED_STATEMENT_firstCheckingConditionNew[MAX_NUMBER_OF_TABLES];		\
 						  char							*PREPARED_STATEMENT_selectClause = NULL;							\
 						  Boolean						PREPARED_STATEMENT_hasAggFunc = FALSE;								\
 						  Boolean						PREPARED_STATEMENT_hasAggMinMax = FALSE;							\
-						  Column						PREPARED_STATEMENT_TGColumns[MAX_N_TABLES][MAX_N_ELEMENTS];			\
-						  int							PREPARED_STATEMENT_nTGColumns[MAX_N_TABLES];						\
+						  Column						PREPARED_STATEMENT_TGColumns[MAX_NUMBER_OF_TABLES][MAX_NUMBER_OF_ELEMENTS];			\
+						  int							PREPARED_STATEMENT_nTGColumns[MAX_NUMBER_OF_TABLES];						\
 						  Boolean						PREPARED_STATEMENT_hasOnlyAggSumCount = FALSE;						\
-						  char							*PREPARED_STATEMENT_A2WhereClause[MAX_N_TABLES];					\
-						  Boolean						PREPARED_STATEMENT_A2AggInvolvedCheck[MAX_N_TABLES];				\
-						  Boolean						PREPARED_STATEMENT_keyInGCheck[MAX_N_TABLES];						\
-						  char							*PREPARED_STATEMENT_A2TGTables[MAX_N_TABLES][MAX_N_ELEMENTS];		\
-						  int							PREPARED_STATEMENT_A2TGNTables[MAX_N_TABLES]
+						  char							*PREPARED_STATEMENT_A2WhereClause[MAX_NUMBER_OF_TABLES];					\
+						  Boolean						PREPARED_STATEMENT_A2AggInvolvedCheck[MAX_NUMBER_OF_TABLES];				\
+						  Boolean						PREPARED_STATEMENT_keyInGCheck[MAX_NUMBER_OF_TABLES];						\
+						  char							*PREPARED_STATEMENT_A2TGTables[MAX_NUMBER_OF_TABLES][MAX_NUMBER_OF_ELEMENTS];		\
+						  int							PREPARED_STATEMENT_A2TGNTables[MAX_NUMBER_OF_TABLES]
 
 #define OBJ_SQ									PREPARED_STATEMENT_selectingQuery
 #define OBJ_FCC(table)							PREPARED_STATEMENT_firstCheckingCondition[table]
@@ -101,6 +90,8 @@ struct s_Column;
 #define INPUT_SELECT_QUERY						gets(PREPARED_STATEMENT_query)
 #define F										cWriter
 #define SQL										sqlWriter
+//T: The purpose of the definition of PRINT_TO_FILE is to distinguish "fprintf" with "printf" which frequently used for debug
+#define PRINT_TO_FILE							fprintf
 
 #define MAIN PREPARE_STATEMENT; \
 			 int main(int argc, char **argv)
@@ -143,6 +134,9 @@ struct s_Column;
 #define DEFQ(c) strcpy(PREPARED_STATEMENT_query, c)
 #define ADDQ(c) strcat(PREPARED_STATEMENT_query, c)
 
+int strLenTarsPuts;
+#define TARS_PUTS(str) strLenTarsPuts = strlen(str); for(i = 0; i <strLenTarsPuts; i++) {printf("%c", str[i]); Sleep(10);} printf("\n")
+
 char *getPrecededTableName(char* wholeExpression, char* colPos);
 void stdExit(PGconn*);
 char *createVarName(const struct s_Column* column);
@@ -156,3 +150,11 @@ Boolean hasInCol(char* condition, int table);
 Boolean hasOutCol(char *condition, int table);
 void A2Split(int table, char* expression, int *nParts, int *partsType, char **parts);
 char *a2FCCRefactor(char* originalFCC, char *prefix);
+
+//----
+char* ConditionCToSQL(char* conditionC);
+
+char *ReplaceCharacter(const char *s, char h, const char *repl);
+//--outer join
+void GenReQueryOuterJoinWithPrimaryKey(int table, FILE *f, char *selectClause);
+void GenCodeInsertForComplementTable(int table, FILE *f, char *mvName, char tab);

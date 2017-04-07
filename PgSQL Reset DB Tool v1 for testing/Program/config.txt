@@ -1,0 +1,13 @@
+outertest
+127.0.0.1
+5433
+postgres
+123456
+C:\Users\TARS\Desktop\outer join db.txt
+mv1_triggersrc.dll
+C:\pgsql9.6\lib
+G:\testmvgen\mv1_mvsrc.sql
+D:\DemoExtension\x64\Debug\mv1_triggersrc.dll
+mv1
+G:\Postges_TriggerC\BitBucket\v4_Test\Release\input.txt
+C:\Users\TARS\Desktop\test.txt

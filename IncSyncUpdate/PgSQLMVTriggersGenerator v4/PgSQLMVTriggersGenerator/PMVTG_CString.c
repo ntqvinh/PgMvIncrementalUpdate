@@ -327,6 +327,16 @@ char *dammf_trim(char *str) {
 }
 
 // DAMMF - SPLIT
+/* T: differences between split and dammf split: dammf free the input str after spliting
+	char **resultSet means we pass the pointer of resultset, that save the changed after calling the method
+	int *resultLen means we pass the pointer of resultLen, that save the changed after calling the method
+	ex: void f(int *a){ a = a * 2 };
+	int b = 4;
+	f(b);
+	-> b = 4;
+	f(&b)
+	-> b = 8;
+*/
 void *dammf_split(char *str, char *delim, char **resultSet, int *resultLen, Boolean isCharDelim) {
 	split(str, delim, resultSet, resultLen, isCharDelim);
 	free(str);
