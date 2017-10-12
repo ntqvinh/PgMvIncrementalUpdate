@@ -33,7 +33,26 @@ void stdExit(PGconn *PREPARED_STATEMENT_connection) {
     exit(1);
 }
 
+char * getColumnName(char *colPos) {
+	char *kq;
+	char *nextSpace = findSubString(colPos, " ");
+	if (nextSpace) {
+		kq = subString(colPos, colPos, nextSpace);
+	}
+	else {
+		kq = colPos;
+	}
+	return kq;
+}
+
 // GET PRECEDED TABLE NAME
+//Based on column position, get table name preceded
+//Ex: 'khoa.ma_khoa', colPos = '.ma_khoa' -> output: 'khoa'
+/*
+	function getPrecededTableName nhận tham số đầu vào là chuỗi wholeExpression, dựa vào vị trí của dấu "." trong chuỗi để xác định tên bảng liền trước nó\
+	'khoa.ma_khoa', colPos = '.ma_khoa' -> output: 'khoa'
+	Sử dụng để tách tên bảng, tên cột
+*/
 char* getPrecededTableName(char *wholeExpression, char *colPos) {
 	int i;
 	char *start;
@@ -48,15 +67,16 @@ char* getPrecededTableName(char *wholeExpression, char *colPos) {
 			i = 0;
 			while (i < operatorsNum && (*start != operators[i])) i++;
 
-			// if at start pos is a normal letter
+			// if at start pos is a normal letter | nếu vị trí bắt đầu là ký tự thường
 			if (i == operatorsNum)
 
-				// check if start is at the beginning pos or not, if yes, get the substring
+				// check if start is at the beginning pos or not, if yes, get the substring | kiểm tra có bắt đầu lặp ở ký tự đầu tiên hay không
+				//Nếu có nghĩa là từ ký tự đầu tiên tới colPos - 1 là tên bảng, lấy substring và return, ngược lại tiếp tục duyệt tìm ngược ra trước (start--)
 				if (start == wholeExpression)
 					return subString(wholeExpression, start, colPos-1);
 				else start--;
 			
-			// if start pos is one of the delimiters, break the loop
+			// if start pos is one of the delimiters, break the loop | gặp delimiters thì dừng
 			else flag = FALSE;
 		} while (flag);
 
@@ -66,15 +86,99 @@ char* getPrecededTableName(char *wholeExpression, char *colPos) {
 
 }
 
+//Base on joining condition position, get the table name preceded
+//ex: wholeExpression = t2 on t1.col = t2.col
+// startDelim = on => output: t2
+/*
+	function getPrecededTableNameInJoiningCondition trả về tên bảng ngay trước mệnh đề ON
+	wholeExpression = t2 on t1.col = t2.col
+	startDelim = on => output: t2
+*/
+char *getPrecededTableNameInJoiningCondition(char* wholeExpression, char* startDelim) {
+	char* kq = "";
+	if (STR_EQUAL_CI(trim(startDelim), trim(KW_ON))) {
+		kq = wholeExpression;
+		while (TRUE) {
+			kq = kq - 1;
+			if (*(kq) == ' ') {
+				kq = kq + 1;
+				break;
+			}				
+		}
+		kq = subString(kq, kq, wholeExpression);	
+	}
+	//starts with Outer join
+	else {
+		kq = wholeExpression;
+		//Take keyword: LEFT, RIGHT or FULL. Default - 5
+		kq = kq - 5;
+		Boolean isRightOuterJoin = FALSE;
+
+		if (STR_EQUAL_CI(findSubString(kq, "RIGHT OUTER JOIN"), kq)) {
+			isRightOuterJoin = TRUE;
+		}
+
+		while (TRUE) {
+			kq = kq - 1;
+			if (*(kq) == ' ' && !isRightOuterJoin) {
+				kq = kq + 1;
+				break;
+			}
+			else if (*(kq) == ' ' && isRightOuterJoin) {
+				isRightOuterJoin = FALSE;
+			}
+		}
+		kq = subString(kq, kq, wholeExpression - 5);
+	}
+
+	return dammf_trim(kq);
+}
+
+//char *findJoiningCondition(char *expression) {
+//	char *kq = "";
+//	char *temp;
+//	kq = findSubString(expression, KW_OUTER_JOIN);
+//	if (kq) {
+//		kq = kq - 5;
+//		kq = subString(expression, expression, kq);
+//	}
+//	//if not find any OUTER JOIN keyword else, it mean expression contains the last joining condition
+//	//This version doesn't care about maybe another condition with AND, OR, ...
+//	else {
+//		//check for where
+//		temp = findSubString(expression, KW_WHERE);
+//		if (temp) {
+//			kq = subString(expression, expression, temp);
+//		}
+//		else {
+//			temp = findSubString(expression, KW_GROUPBY);
+//			if (temp) {
+//				kq = subString(expression, expression, temp);
+//			}
+//			else {
+//				kq = expression;
+//			}
+//			
+//		}		
+//	}
+//	return kq;
+//}
+//
+//char *findCurrentJoinType(char *currentTableName, char *expression) {
+//	char *kq = "";
+//	kq = expression - LEN(currentTableName) - LEN(KW_OUTER_JOIN);
+//	kq = kq - 5;
+//	return trim(subString(kq, kq, kq + 5));
+//}
+
 // CREATE VAR NAME *
-/*T: function createVarName(const struct Column)
-	công dụng: dựa vào cột và context của cột để tạo tên biến để gen code C 
+/* function createVarName(const struct Column)
+	generate C var name for generating code using it's column name and context
+	Tạo ra tên biến C dùng trong việc sinh mã sử dụng tên cột và context, kiểu dữ liệu trong cột để tạo
 */
 char *createVarName(const Column column) {
-	//printf("creating var name for column %s: , context = %d, ", column->name, column->context);
 	char *rs = "";
 	char *prefix = createTypePrefix(column->type);
-	//printf("prefix = %s ", prefix);
 	if (column->context != COLUMN_CONTEXT_EXPRESSION && column->context != COLUMN_CONTEXT_NOT_TABLE) {
 		char *colName = column->name;
 		char *tableName = column->table->name;
@@ -88,35 +192,19 @@ char *createVarName(const Column column) {
 
 		if (column->context == COLUMN_CONTEXT_TABLE) 
 			STR_APPEND(rs, "_table");
-		//else if (column->context == COLUMN_CONTEXT_FREE)
-			//{STR_APPEND(rs, "_"); STR_APPEND(rs, randStr);}
 		
 		FREE(randStr);
 
 	} else {
-		/*DMT: char *funcName = column->func;
-		printf("%s\n\n\n", funcName);
-		funcName = subString(funcName, funcName, findSubString(funcName, "("));
-
-		printf("->%s\n\n\n", funcName);
-		char *funcArg = column->funcArg;
-		char *colName = funcName;
-		STR_APPEND(colName, "_");
-		STR_APPEND(colName, dammf_replaceAll(funcArg, ".", "_"));
-		STR_APPEND(colName, "_");
-		STR_APPEND(colName, randomString(-1));*/
+		
 		char *colName = randomString(-1);
 		
-		//printf("%s - %s \n", ab, cd);
 		rs = copy(prefix);
 		STR_APPEND(rs, "_");
 		STR_APPEND(rs, colName);
 
-		FREE(colName);/*
-		FREE(funcName);
-		FREE(funcArg);*/
+		FREE(colName);
 	}
-	//printf("output = %s \n", rs);
 	return rs;
 }
 
@@ -127,6 +215,7 @@ char *createVarName(const Column column) {
 	integer -> int
 	bigint -> bigint
 	others: num (decimal, bit, ...)
+
 */
 char *createTypePrefix(const char *SQLTypeName) {
 	char *ret;
@@ -151,6 +240,9 @@ char *createTypePrefix(const char *SQLTypeName) {
 }
 
 // CREATE C TYPE *
+/*
+	Dựa vào SQLTypeName để xác định kiểu dữ liệu tương ứng trong C
+*/
 char *createCType(const char *SQLTypeName) {
 	char *ret;
 	if (STR_EQUAL(SQLTypeName, "character varying") 
@@ -178,7 +270,7 @@ char *createCType(const char *SQLTypeName) {
 	original column name can be NULL
 	method does: adding column's information to OBJ_SELECTED_COL
 	return boolean: 
-	"Real column": cot duoc select trong truy van tao KNT (hình như vậy)
+	"Real column": columns which are selected in the original query
 	addRealColumn là thao tác tạo ra các đối tượng struct Column cho các cột trong mệnh đề SELECT trong truy vấn tạo KNT
 	return: TRUE nếu cột được select hiện tại (selectedName) là cột có trong 1 bảng 
 	Về: originalColName
@@ -214,9 +306,9 @@ Boolean addRealColumn(char *selectedName, char *originalColName) {
 			// check for the selected name, determining the next step is necessary or not
 			if (STR_EQUAL(columnName, OBJ_TABLE(j)->cols[k]->name)
 				&& (STR_EQUAL(tableName, "*") || STR_EQUAL(tableName, OBJ_TABLE(j)->name))) {
-					// standalone col
+					// standalone col | cột chỉ đứng riêng lẻ
 					if (originalColName == NULL) {
-					//	printf("standalone\n");
+					/
 						//vd: sinh_vien.ma_sv
 						OBJ_SELECTED_COL(OBJ_NSELECTED) = copyColumn(OBJ_TABLE(j)->cols[k]);
 						OBJ_SELECTED_COL(OBJ_NSELECTED)->context = COLUMN_CONTEXT_FREE;
@@ -224,7 +316,7 @@ Boolean addRealColumn(char *selectedName, char *originalColName) {
 						FREE(OBJ_SELECTED_COL(OBJ_NSELECTED)->varName);
 						OBJ_SELECTED_COL(OBJ_NSELECTED)->varName = createVarName(OBJ_SELECTED_COL(OBJ_NSELECTED));
 					} else {
-					// combined col
+					// combined col | cột được gộp bằng biểu thức
 						//vd: sinh_vien.ma_sv*sinh_vien.tuoi
 						//printf("combined\n");
 						OBJ_SELECTED_COL(OBJ_NSELECTED) = copyColumn(OBJ_TABLE(j)->cols[k]);
@@ -248,6 +340,9 @@ Boolean addRealColumn(char *selectedName, char *originalColName) {
 }
 
 // ADD FUNCTION (NORMAL & AGGREGATE FUNCTIONS)
+/*
+Add function là thao tác tạo ra các đối tượng struct Column cho các cột gộp nhóm, các cột là kết quả hàm thống kê trong mệnh đề SELECT trong truy vấn tạo KNT
+*/
 char* addFunction(char *selectedName, char *remainder, int funcNum, char **funcList, Boolean isAggFunc) {
 	/*
 		T: input mẫu:
@@ -263,7 +358,7 @@ char* addFunction(char *selectedName, char *remainder, int funcNum, char **funcL
 		 *tmp, *tmp_pre, *tmp_post, 
 		 *remain;
 
-	// This is the draft string for getting the aggregate functions, returned at the end.
+	// This is the draft string for getting the aggregate functions, returned at the end. | tạo chuỗi nháp để return khi kết thúc hàm
 	remain = copy(remainder);
 	do {
 		start = remain;
@@ -271,10 +366,6 @@ char* addFunction(char *selectedName, char *remainder, int funcNum, char **funcL
 		while ((funcPos = findSubString(start, funcList[i])) == NULL && i < funcNum-1) i++;
 
 		if (funcPos) {
-
-			/*
-				Save the column marked with aggregate function 'TRUE' to the 'selected list'
-			*/
 
 			// Check parentheses number
 			int check = 0;
@@ -328,26 +419,14 @@ char* addFunction(char *selectedName, char *remainder, int funcNum, char **funcL
 				tmp = append(OBJ_SELECTED_COL(OBJ_NSELECTED+1)->func, OBJ_SELECTED_COL(OBJ_NSELECTED+1)->funcArg);
 				OBJ_SELECTED_COL(OBJ_NSELECTED + 1)->name = append(tmp, ")");
 				free(tmp);
-
-				/*char *dotPos = strstr(selectedName, ".");
-				char *columnName, *tableName;
-				if (dotPos) {
-					tableName = getPrecededTableName(selectedName, dotPos + 1);
-					for (int j = 0; j < OBJ_SQ->fromElementsNum; j++) {
-						if (STR_EQUAL(OBJ_TABLE(j)->name, tableName)) {
-							printf("Table name = %s\n", OBJ_TABLE(j)->name);
-							OBJ_SELECTED_COL(OBJ_NSELECTED + 1)->table = copyTable(OBJ_TABLE(j));
-							OBJ_SELECTED_COL(OBJ_NSELECTED)->table = copyTable(OBJ_TABLE(j));
-						}
-					}
-				}*/
+				
 				OBJ_SELECTED_COL(OBJ_NSELECTED+1)->context = COLUMN_CONTEXT_EXPRESSION;
 				OBJ_SELECTED_COL(OBJ_NSELECTED+1)->varName = createVarName(OBJ_SELECTED_COL(OBJ_NSELECTED+1));
 			}
 			// Name = "func(funcArg)"
 			tmp = append(OBJ_SELECTED_COL(OBJ_NSELECTED)->func, OBJ_SELECTED_COL(OBJ_NSELECTED)->funcArg);
 			OBJ_SELECTED_COL(OBJ_NSELECTED)->name = append(tmp, ")");
-			//printf("name = %s\n", OBJ_SELECTED_COL(OBJ_NSELECTED)->name);
+			
 			free(tmp);
 			if (isAggFunc) {
 				OBJ_SELECTED_COL(OBJ_NSELECTED)->hasAggregateFunction = TRUE;
@@ -373,7 +452,8 @@ char* addFunction(char *selectedName, char *remainder, int funcNum, char **funcL
 			OBJ_SELECTED_COL(OBJ_NSELECTED)->varName = createVarName(OBJ_SELECTED_COL(OBJ_NSELECTED));
 
 			if (avgAppear)
-				OBJ_NSELECTED += 2; //T: because we have to store SUM and COUNT instead of AVG
+				OBJ_NSELECTED += 2; //T: because we have to store SUM and COUNT instead of AVG | NSELECTED + 2 vì lúc này phải lưu SUM Và COUNT thay vì AVG
+									//Đối với các hàm còn lại như MIN, MAX ... thì chỉ + 1
 			else OBJ_NSELECTED++; 
 
 			// The string before aggFuncPos is saved
@@ -406,13 +486,11 @@ char* addFunction(char *selectedName, char *remainder, int funcNum, char **funcL
 // FILTER TRIGGER CONDITION
 /*T: 
 	function: filterTriggerCondition (condition, tableIndex):
-	Dùng trong bước: 
-	Công dụng:
+	Hàm này giải thích rất dài, tham khảo tệp Note.docx
 
 */
 void filterTriggerCondition(char* _condition, int table, Boolean isOuterJoinConditionFiltering) {
 
-	//printf("%s - %s\n", _condition, OBJ_TABLE(table)->name);
 	int i, j;
 	Boolean hasAgg = FALSE, 
 		    inCol = FALSE, 
@@ -566,9 +644,6 @@ Boolean hasOutCol(char *condition, int table) {
 	return FALSE;
 }
 
-/*T: function A2Split
-	Công dụng: 
-*/
 void A2Split(int table, char* expression, int *nParts, int *partsType, char **parts) {
 	int i, j;
 	printf("A2Split for table %s: \n", OBJ_TABLE(table)->name);
@@ -690,73 +765,6 @@ char *a2FCCRefactor(char* originalFCC, char *prefix) {
 	}
 	printf("returned = %s\n", originalFCCCopied);
 	return originalFCCCopied;
-	/*char *result = copy(originalFCC);
-	char *check_TablePos = result;
-	char *_tablePos;
-
-	while (_tablePos = strstr(check_TablePos, "_table")) {
-		
-		char *wordEndPoint = _tablePos + LEN("_table");
-		char operators[] = {'(', ')', ' ', '=', '>', '<', '+', '-', '*', '/'};
-		int operatorsNum = 10;
-		int i;
-		Boolean flag = TRUE;
-
-		char *start = wordEndPoint - 1;
-
-		do {
-			i = 0;
-			while (i < operatorsNum && (*start != operators[i])) i++;
-
-			// if at start pos is a normal letter
-			if (i == operatorsNum) {
-
-				// check if start is at the beginning pos or not, if yes, get the substring
-				if (start == result) {
-					char *colVar = subString(result, start, wordEndPoint);
-
-					dam
-
-					FREE(colVar);
-				}
-				else start--;
-			}
-		} while (TRUE);
-
-		check_TablePos = _tablePos;
-	}
-
-	return result;
-	//end
-
-	
-	
-	
-	
-
-	
-
-	if (colPos != NULL && colPos != wholeExpression && *(colPos-1) == '.') {
-		start = colPos-2;
-		do {
-			i = 0;
-			while (i < operatorsNum && (*start != operators[i])) i++;
-
-			// if at start pos is a normal letter
-			if (i == operatorsNum)
-
-				// check if start is at the beginning pos or not, if yes, get the substring
-				if (start == wholeExpression)
-					return subString(wholeExpression, start, colPos-1);
-				else start--;
-			
-			// if start pos is one of the delimiters, break the loop
-			else flag = FALSE;
-		} while (flag);
-
-		// get string at exclusive start pos
-		return subString(wholeExpression, start+1, colPos-1);
-	} else return NULL;*/
 }
 
 char *ConditionCToSQL(char *conditionC) {
@@ -838,125 +846,4 @@ char *ReplaceCharacter(const char *s, char ch, const char *repl) {
 	}
 	*ptr = 0;
 	return res;
-}
-
-void GenReQueryOuterJoinWithPrimaryKey(int j, FILE *F, char *OBJ_SELECT_CLAUSE) {
-	int i = 0;
-	// Re-query
-	PRINT_TO_FILE(F, "\n		// Re-query\n");
-	char *outerJoinSelect = copy(OBJ_SELECT_CLAUSE);
-	outerJoinSelect = replaceFirst(outerJoinSelect, ", count(*)", "");
-	PRINT_TO_FILE(F, "		DEFQ(\"%s \");\n", outerJoinSelect);
-	PRINT_TO_FILE(F, "		ADDQ(\" from \");\n");
-	PRINT_TO_FILE(F, "		ADDQ(\"%s\");\n", OBJ_SQ->from);
-	PRINT_TO_FILE(F, "		ADDQ(\" where true \");\n");
-	if (OBJ_SQ->hasWhere) PRINT_TO_FILE(F, "		ADDQ(\" and (%s)\");\n", OBJ_SQ->where);
-	for (i = 0; i < OBJ_TABLE(j)->nCols; i++)
-		if (OBJ_TABLE(j)->cols[i]->isPrimaryColumn) {
-			char *quote;
-			char *strprefix;
-			char *ctype = createCType(OBJ_TABLE(j)->cols[i]->type);
-			if (STR_EQUAL(ctype, "char *")) { quote = "\'"; strprefix = ""; }
-			else { quote = ""; strprefix = "str_"; }
-			PRINT_TO_FILE(F, "		ADDQ(\" and %s.%s = %s\");\n", OBJ_TABLE(j)->name, OBJ_TABLE(j)->cols[i]->name, quote);
-			PRINT_TO_FILE(F, "		ADDQ(%s%s);\n", strprefix, OBJ_TABLE(j)->cols[i]->varName);
-			PRINT_TO_FILE(F, "		ADDQ(\"%s\");\n", quote);
-			FREE(ctype);
-		}
-
-}
-
-void GenCodeInsertForComplementTable(int j, FILE *F, char *mvName, char tab) {
-	int i = 0;
-	// Check if there is a similar row in MV
-
-	PRINT_TO_FILE(F, "%c			DEFQ(\"select * from %s where true \");\n",tab, mvName);
-	for (i = 0; i < OBJ_NSELECTED - 1; i++) {
-		//			if (!OBJ_SELECTED_COL(i)->hasAggregateFunction) {
-		char *quote;
-		char *ctype;
-		ctype = createCType(OBJ_SELECTED_COL(i)->type);
-		if (STR_EQUAL(ctype, "char *")) quote = "\'";
-		else quote = "";
-		if (OBJ_SELECTED_COL(i)->table->isMainTableOfOuterJoin) {
-			PRINT_TO_FILE(F, "%c			ADDQ(\" and %s = %s\");\n",tab, OBJ_SELECTED_COL(i)->name, quote);
-			PRINT_TO_FILE(F, "%c			ADDQ(%s);\n", tab,OBJ_SELECTED_COL(i)->varName);
-			PRINT_TO_FILE(F, "%c			ADDQ(\"%s\");\n",tab, quote);
-		}
-		else if (OBJ_SELECTED_COL(i)->table->isComplementTableOfOuterJoin) {
-			PRINT_TO_FILE(F, "%c			ADDQ(\" and %s isnull\");\n", tab, OBJ_SELECTED_COL(i)->name);
-		}
-
-		FREE(ctype);
-		//			}
-	}
-
-	PRINT_TO_FILE(F, "%c			EXEC;\n", tab);
-	PRINT_TO_FILE(F, "%c			if(NO_ROW){\n", tab);
-	PRINT_TO_FILE(F, "%c				DEFQ(\"insert into %s values(\");\n",tab, mvName);
-	for (i = 0; i < OBJ_NSELECTED - 1; i++) {
-		char *quote;
-		char *ctype = createCType(OBJ_SELECTED_COL(i)->type);
-		if (STR_EQUAL(ctype, "char *"))
-			quote = "'";
-		else quote = "";
-		PRINT_TO_FILE(F, "%c				ADDQ(\"%s\");\n",tab, quote);
-		PRINT_TO_FILE(F, "%c				ADDQ(%s);\n",tab, OBJ_SELECTED_COL(i)->varName);
-		PRINT_TO_FILE(F, "%c				ADDQ(\"%s\");\n",tab, quote);
-		if (i != OBJ_NSELECTED - 2) PRINT_TO_FILE(F, "%c				ADDQ(\", \");\n", tab);
-		FREE(ctype);
-	}
-	PRINT_TO_FILE(F, "%c				ADDQ(\")\");\n",tab, mvName);
-	PRINT_TO_FILE(F, "%c				EXEC;\n", tab);
-	PRINT_TO_FILE(F, "%c			} else {\n", tab);
-
-	PRINT_TO_FILE(F, "%c				// update old row\n", tab);
-	PRINT_TO_FILE(F, "%c				DEFQ(\"update %s set \");\n",tab, mvName);
-	int colInSelect = 0;
-	for (i = 0; i < OBJ_NSELECTED - 1; i++) {
-		if (OBJ_SELECTED_COL(i)->table->isComplementTableOfOuterJoin) {
-			colInSelect++;
-		}
-	}
-	for (i = 0; i < OBJ_NSELECTED - 1; i++) {
-		if (OBJ_SELECTED_COL(i)->table->isComplementTableOfOuterJoin) {
-			char *quote;
-			char *ctype;
-			ctype = createCType(OBJ_SELECTED_COL(i)->type);
-			if (STR_EQUAL(ctype, "char *")) quote = "\'";
-			else quote = "";
-			PRINT_TO_FILE(F, "%c				ADDQ(\" %s = %s\"); \n", tab, OBJ_SELECTED_COL(i)->name, quote);
-			PRINT_TO_FILE(F, "%c				ADDQ(%s);\n", tab, OBJ_SELECTED_COL(i)->varName);
-			PRINT_TO_FILE(F, "%c				ADDQ(\"%s\"); \n", tab, quote);
-			colInSelect--;
-			if (colInSelect > 0) {
-				PRINT_TO_FILE(F, "%c				ADDQ(\",\");\n", tab);
-			}
-			FREE(ctype);
-		}
-	}
-
-	PRINT_TO_FILE(F, "%c				ADDQ(\" WHERE TRUE \");\n", tab);
-
-	for (i = 0; i < OBJ_NSELECTED - 1; i++) {
-		char *quote;
-		char *ctype;
-		ctype = createCType(OBJ_SELECTED_COL(i)->type);
-		if (STR_EQUAL(ctype, "char *")) quote = "\'";
-		else quote = "";
-		if (OBJ_SELECTED_COL(i)->table->isMainTableOfOuterJoin) {
-			PRINT_TO_FILE(F, "%c				ADDQ(\" AND %s = %s\"); \n", tab, OBJ_SELECTED_COL(i)->name, quote);
-			PRINT_TO_FILE(F, "%c				ADDQ(%s);\n", tab, OBJ_SELECTED_COL(i)->varName);
-			PRINT_TO_FILE(F, "%c				ADDQ(\"%s\"); \n", tab, quote);
-		}
-		else if (OBJ_SELECTED_COL(i)->table->isComplementTableOfOuterJoin) {
-			PRINT_TO_FILE(F, "%c				ADDQ(\" AND %s isnull\"); \n", tab, OBJ_SELECTED_COL(i)->name);
-		}
-
-		FREE(ctype);
-	}
-
-	PRINT_TO_FILE(F, "%c				EXEC;\n", tab);
-
-	PRINT_TO_FILE(F, "%c			}\n", tab);
 }

@@ -281,7 +281,7 @@ char *findSubString(char *str, char *subStr) {
 	int i, j;
 	char *rs = NULL;
 
-	Boolean **compare = (Boolean**) malloc (sizeof(Boolean*) * len);
+	Boolean **compare = (Boolean**) malloc (sizeof(Boolean*) * len * 2);
 	for (i = 0; i < len; i++)
 		compare[i] = (Boolean*) malloc (sizeof(Boolean) * sublen);
 
@@ -381,4 +381,38 @@ char *dammf_replaceAll(char *str, char *oldString, char* newString) {
 	} while (pos);
 	free(str);
 	return tmp;
+}
+
+
+char *replace_str(const char *s, const char *old, const char *new)
+{
+	char *ret;
+	int i, count = 0;
+	int newlen = strlen(new);
+	int oldlen = strlen(old);
+
+	for (i = 0; s[i] != '\0'; i++) {
+		if (strstr(&s[i], old) == &s[i]) {
+			count++;
+			i += oldlen - 1;
+		}
+	}
+
+	ret = malloc(i + count * (newlen - oldlen));
+	if (ret == NULL)
+		exit(EXIT_FAILURE);
+
+	i = 0;
+	while (*s) {
+		if (strstr(s, old) == s) {
+			strcpy(&ret[i], new);
+			i += newlen;
+			s += oldlen;
+		}
+		else
+			ret[i++] = *s++;
+	}
+	ret[i] = '\0';
+
+	return ret;
 }

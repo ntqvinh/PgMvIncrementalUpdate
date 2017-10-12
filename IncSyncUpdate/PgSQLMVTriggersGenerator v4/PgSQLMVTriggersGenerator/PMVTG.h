@@ -5,10 +5,12 @@
 #include <libpq-fe.h>
 #include "PMVTG_Boolean.h"
 #include "PMVTG_Config.h"
+#include "PMVTG_Group.h"
 
 struct s_SelectingQuery;
 struct s_Table;
 struct s_Column;
+struct s_Group;
 
 #define PREPARE_STATEMENT const char					*PREPARED_STATEMENT_connectionInfo;									\
 						  PGconn						*PREPARED_STATEMENT_connection;										\
@@ -16,6 +18,7 @@ struct s_Column;
 						  char							PREPARED_STATEMENT_query[MAX_LENGTH_OF_QUERY];								\
 						  struct s_SelectingQuery		*PREPARED_STATEMENT_selectingQuery;									\
 						  Table							PREPARED_STATEMENT_table[MAX_NUMBER_OF_TABLES];								\
+						  Group							PREPARED_STATEMENT_group[2];								\
 						  Column						PREPARED_STATEMENT_selectedColumn[MAX_NUMBER_OF_SELECT_ELEMENT];			\
 						  int							PREPARED_STATEMENT_nSelectedCol = 0;								\
 						  char							*PREPARED_STATEMENT_outConditions[MAX_NUMBER_OF_TABLES][MAX_NUMBER_OF_ELEMENTS];	\
@@ -51,6 +54,7 @@ struct s_Column;
 #define OBJ_IN_CONDITIONS_NEW(table, x)			PREPARED_STATEMENT_inConditionsNew[table][x]
 
 #define OBJ_TABLE(i)							PREPARED_STATEMENT_table[i]
+#define OBJ_GROUP(i)							PREPARED_STATEMENT_group[i]
 #define OBJ_SELECTED_COL(i)						PREPARED_STATEMENT_selectedColumn[i]
 #define OBJ_OUT_CONDITIONS(table, x)			PREPARED_STATEMENT_outConditions[table][x]
 #define OBJ_IN_CONDITIONS(table, x)				PREPARED_STATEMENT_inConditions[table][x]
@@ -77,6 +81,7 @@ struct s_Column;
 #define ANALYZE_SELECT_QUERY					OBJ_SQ = analyzeSelectingQuery(PREPARED_STATEMENT_query)
 #define FREE_SELECT_QUERY						freeSelectingQuery(&OBJ_SQ)
 #define FREE_TABLE(table)						delTable(&table);
+#define FREE_GROUP(group)						delGroup(&group);
 #define FREE_COL(col)							delColumn(&col);
 
 #define ADD_OBJ_OUT_CONDITION(table, X)			OBJ_OUT_CONDITIONS(table, OBJ_OUT_NCONDITIONS(table)++) = X
@@ -90,9 +95,14 @@ struct s_Column;
 #define INPUT_SELECT_QUERY						gets(PREPARED_STATEMENT_query)
 #define F										cWriter
 #define SQL										sqlWriter
-//T: The purpose of the definition of PRINT_TO_FILE is to distinguish "fprintf" with "printf" which frequently used for debug
-#define PRINT_TO_FILE							fprintf
-
+//T: The purpose of the definition of FPRINTF is to distinguish "fprintf" with "printf" which frequently used for debug
+#define FPRINTF							fprintf
+#define BREAK	if (j == OBJ_SQ->fromElementsNum) {	\
+					goto end_;						\
+				}									\
+				else {								\
+					continue;						\
+				}						
 #define MAIN PREPARE_STATEMENT; \
 			 int main(int argc, char **argv)
 
@@ -138,6 +148,10 @@ int strLenTarsPuts;
 #define TARS_PUTS(str) strLenTarsPuts = strlen(str); for(i = 0; i <strLenTarsPuts; i++) {printf("%c", str[i]); Sleep(10);} printf("\n")
 
 char *getPrecededTableName(char* wholeExpression, char* colPos);
+char *getPrecededTableNameInJoiningCondition(char* wholeExpression, char* startDelim);
+char * getColumnName(char *colPos);
+char *findJoiningCondition(char *expression);
+char *findCurrentJoinType(char *currentTableName, char *expression);
 void stdExit(PGconn*);
 char *createVarName(const struct s_Column* column);
 char *createTypePrefix(const char *SQLTypeName);
@@ -155,6 +169,3 @@ char *a2FCCRefactor(char* originalFCC, char *prefix);
 char* ConditionCToSQL(char* conditionC);
 
 char *ReplaceCharacter(const char *s, char h, const char *repl);
-//--outer join
-void GenReQueryOuterJoinWithPrimaryKey(int table, FILE *f, char *selectClause);
-void GenCodeInsertForComplementTable(int table, FILE *f, char *mvName, char tab);

@@ -244,5 +244,5 @@ char *dammf_append(char *source, char *str);
 	! Input parameter 'str' is freed after function execution
 */
 char *dammf_replaceAll(char *str, char *oldString, char* newString);
-
+char *replace_str(char *str, char *orig, char *rep);
 #endif

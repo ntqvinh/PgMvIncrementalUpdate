@@ -1,4 +1,5 @@
 #pragma once
+#include "PMVTG_Boolean.h"
 
 /*
 	Usage demo:

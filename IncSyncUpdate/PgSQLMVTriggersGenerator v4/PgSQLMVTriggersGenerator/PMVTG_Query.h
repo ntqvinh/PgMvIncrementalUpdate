@@ -33,6 +33,10 @@
 #define KW_LEFT_OUTER_JOIN								" left outer join "
 #define KW_RIGHT_OUTER_JOIN								" right outer join "
 #define KW_FULL_OUTER_JOIN								" full outer join "
+#define MAIN_TABLE										"MAIN"
+#define COMPLEMENT_TABLE								"COMP"
+#define POSITION_LEFT									"POSITION_LEFT"
+#define POSITION_RIGHT									"POSITION_RIGHT"
 
 
 /*
@@ -60,7 +64,7 @@
 typedef struct s_SelectingQuery *SelectingQuery;
 struct s_SelectingQuery {
 	// Pointers for the positions of clauses' keyword
-	char *selectPos, *fromPos, *wherePos, *groupbyPos, *havingPos, *outerJoinPos;
+	char *selectPos, *fromPos, *wherePos, *groupbyPos, *havingPos, *outerJoinPos, *innerJoinPos;
 
 	// Clauses' content (as 'malloc' allocated strings)
 	char *select, *from, *where, *groupby, *having;
@@ -101,8 +105,22 @@ struct s_SelectingQuery {
 	int groupbyElementsNum;
 
 	// Determine if each clause appeared or not
-	Boolean hasJoin, hasWhere, hasGroupby, hasHaving, hasOuterJoin;
+	Boolean hasJoin, hasWhere, hasGroupby, hasHaving, hasOuterJoin, hasInnerJoin;
+	
+	//from the last version, not sure that currently needs
 	char *outerJoinType;
+	char *groupOuterJoinType;
+	char *groupOuterJoinCondition;
+	// :))
+	//these 2 are for new inner-outer join combined
+	char *groupJoinType;
+	char *groupJoinCondition;
+	
+	char *joiningTypesElements[MAX_NUMBER_OF_ELEMENTS];
+	int joiningTypesNums;
+	char *joiningConditionsElements[MAX_NUMBER_OF_ELEMENTS];
+	int joiningConditionsNums;
+	int lastInnerJoinIndex; 
 	
 };
 
@@ -140,3 +158,4 @@ void analyzeLogicExpression(char *logicExpression, char **resultSet, int *result
 	Use in pair with 'analyzeSelectingQuery'
 */
 void freeSelectingQuery(SelectingQuery *sq);
+
