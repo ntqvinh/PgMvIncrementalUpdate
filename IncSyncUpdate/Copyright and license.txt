@@ -1,5 +1,6 @@
 Copyright: 
 1. Nguyen Tran Quoc Vinh - ntquocvinh{@ued.udn.vn, @gmail.com}
 2. Tran Trong Nhan - trongnhan.tran93@gmail.com
+3. Do Minh Tuan - it.dominhtuan@gmail.com
 
 License: PostgreSQL Licence
