@@ -130,6 +130,7 @@
     <ClCompile Include="..\PgSQLMVTriggersGenerator v4\PgSQLMVTriggersGenerator\PMVTG.c" />
     <ClCompile Include="..\PgSQLMVTriggersGenerator v4\PgSQLMVTriggersGenerator\PMVTG_Column.c" />
     <ClCompile Include="..\PgSQLMVTriggersGenerator v4\PgSQLMVTriggersGenerator\PMVTG_CString.c" />
+    <ClCompile Include="..\PgSQLMVTriggersGenerator v4\PgSQLMVTriggersGenerator\PMVTG_Group.c" />
     <ClCompile Include="..\PgSQLMVTriggersGenerator v4\PgSQLMVTriggersGenerator\PMVTG_Query.c" />
     <ClCompile Include="..\PgSQLMVTriggersGenerator v4\PgSQLMVTriggersGenerator\PMVTG_Table.c" />
   </ItemGroup>
@@ -139,6 +140,7 @@
     <ClInclude Include="..\PgSQLMVTriggersGenerator v4\PgSQLMVTriggersGenerator\PMVTG_Column.h" />
     <ClInclude Include="..\PgSQLMVTriggersGenerator v4\PgSQLMVTriggersGenerator\PMVTG_Config.h" />
     <ClInclude Include="..\PgSQLMVTriggersGenerator v4\PgSQLMVTriggersGenerator\PMVTG_CString.h" />
+    <ClInclude Include="..\PgSQLMVTriggersGenerator v4\PgSQLMVTriggersGenerator\PMVTG_Group.h" />
     <ClInclude Include="..\PgSQLMVTriggersGenerator v4\PgSQLMVTriggersGenerator\PMVTG_Query.h" />
     <ClInclude Include="..\PgSQLMVTriggersGenerator v4\PgSQLMVTriggersGenerator\PMVTG_Table.h" />
   </ItemGroup>

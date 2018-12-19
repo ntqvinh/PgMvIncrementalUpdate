@@ -33,6 +33,9 @@
     <ClCompile Include="..\PgSQLMVTriggersGenerator v4\PgSQLMVTriggersGenerator\PMVTG_Table.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\PgSQLMVTriggersGenerator v4\PgSQLMVTriggersGenerator\PMVTG_Group.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\PgSQLMVTriggersGenerator v4\PgSQLMVTriggersGenerator\PMVTG.h">
@@ -54,6 +57,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\PgSQLMVTriggersGenerator v4\PgSQLMVTriggersGenerator\PMVTG_Table.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PgSQLMVTriggersGenerator v4\PgSQLMVTriggersGenerator\PMVTG_Group.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
